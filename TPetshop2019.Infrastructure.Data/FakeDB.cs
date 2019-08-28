@@ -11,8 +11,6 @@ namespace TPetshop2019.Infrastructure.Data
         internal static IEnumerable<Pet> PetTable;
         internal static IEnumerable<Owner> OwnerTable;
 
-
-
         public static void InitData()
         {
 
@@ -24,7 +22,12 @@ namespace TPetshop2019.Infrastructure.Data
                 Birthdate = new DateTime(2017,2,10),
                 Colour = "Dark Brown",
                 Name = "Peter Barker",
-                PreviousOwner = new Owner(),
+                PreviousOwner = new Owner
+                {
+                    Id = OwnerId++,
+                    FirstName = "Lars",
+                    LastName = "Larsen"
+                },
                 Price = 350,
                 Type = "Corgi"
             };
