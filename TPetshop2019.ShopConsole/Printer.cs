@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using TPetshop2019.Core.ApplicationServices;
 using TPetshop2019.Core.Entity;
 
 namespace TPetshop2019.ShopConsole
 {
-    public class Printer
+    public class Printer: IPrinter
     {
         private readonly IPetService _petService;
         private readonly IOwnerService _ownerService;
 
         private static readonly string[] PetMenuItems = new string[]
-            {"Create Pet", "Read Pet", "Update Pet", "Delete Pet", "List all Pets", "Exit to the Main Menu"};
+            {"Create Pet", "Read Pet", "Update Pet", "Delete Pet", "List all Pets",
+                "Search for pets", "Sort pets by price","Find the five cheapest Pets", "Exit to the Main Menu"};
 
         private static readonly string[] OwnerMenuItems = new string[]
             {"Create Owner", "Read Owner", "Update Owner", "Delete Owner", "List all Owners", "Exit to the Main Menu"};
@@ -23,7 +27,6 @@ namespace TPetshop2019.ShopConsole
         {
             _petService = petService;
             _ownerService = ownerService;
-            ChooseMenu();
         }
 
         public void ChooseMenu()
@@ -62,7 +65,7 @@ namespace TPetshop2019.ShopConsole
         public void OwnerChosenMenu()
         {
             var choice = 0;
-            while (choice != 6)
+            while (choice != OwnerMenuItems.Length)
             {
                 ShowMenu(OwnerMenuItems);
                 while (!int.TryParse(Console.ReadLine(), out choice))
@@ -101,7 +104,7 @@ namespace TPetshop2019.ShopConsole
         public void PetChosenMenu()
         {
             var choice = 0;
-            while (choice != 6)
+            while (choice != PetMenuItems.Length)
             {
                 ShowMenu(PetMenuItems);
                 while (!int.TryParse(Console.ReadLine(), out choice))
@@ -127,6 +130,15 @@ namespace TPetshop2019.ShopConsole
                         ListAllPets();
                         break;
                     case 6:
+                        searchPets();
+                        break;
+                    case 7:
+                        OrderPetListByPrice();
+                        break;
+                    case 8:
+                        FindFiveCheapestPets();
+                        break;
+                    case 9:
                         ExitToMainMenu();
                         break;
                     default:
@@ -136,7 +148,37 @@ namespace TPetshop2019.ShopConsole
             }
         }
 
+        public void OrderPetListByPrice()
+        {
+            PrintList(this._petService.sortPets());
+        }
 
+        public void PrintList(IEnumerable<Pet> listToPrint)
+        {
+            foreach (var pet in listToPrint)
+            {
+                Console.Write(
+                    $"Pet found: \nId: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
+                    $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
+                    $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
+            }
+        }
+
+        public void FindFiveCheapestPets()
+        {
+            PrintList(this._petService.GetFiveCheapestPets());
+        }
+        public void searchPets()
+        {
+            string query = GetInput("Write your search query:");
+            foreach (var pet in this._petService.GetPets())
+            {
+                if (pet.Type.ToLower().Contains(query.ToLower()))
+                {
+                    Console.WriteLine("Name: "+ pet.Name + " "+ "Type: "+ pet.Type);
+                }
+            }
+        }
         private void ListAllPets()
         {
             Console.WriteLine("Listing all pets \n");
@@ -146,9 +188,9 @@ namespace TPetshop2019.ShopConsole
                     $"Pet found: \nId: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
                     $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
                     $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
+                Console.WriteLine("\n");
             }
 
-            Console.WriteLine("\n");
         }
 
         private void DeletePet()
@@ -172,9 +214,18 @@ namespace TPetshop2019.ShopConsole
             return input;
         }
         
-        private void UpdatePet()
+        public void UpdatePet()
         {
-            throw new NotImplementedException();
+            var id = Convert.ToInt32(GetInput("Write the id of the pet you want to update"));
+            var name = GetInput("Write the new name of the pet, or just the same one if no change is to be made");
+            var colour = GetInput("Write the colour of the pet");
+            var type = GetInput("Write the pet's type");
+            var price = Convert.ToDouble(GetInput("Write the pet's price"));
+            var birthdate = Convert.ToDateTime(GetInput("Write the pet's birthdate"));
+            var soldDate = Convert.ToDateTime(GetInput("Write the pet's soldDate"));
+            var previousOwner = new Owner();
+            //PreviousOwner stuff is not yet made, therefore it is blank as it is needed in the update method
+            this._petService.UpdatePet(id,name,type,colour,price,birthdate,soldDate,previousOwner);
         }
 
         private void ReadPet()

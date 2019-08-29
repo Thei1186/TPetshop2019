@@ -20,11 +20,12 @@ namespace TPetshop2019.ShopConsole
             serviceCollection.AddScoped<IOwnerRepository, OwnerRepository>();
             serviceCollection.AddScoped<IPetService, PetService>();
             serviceCollection.AddScoped<IOwnerService, OwnerService>();
+            serviceCollection.AddScoped<IPrinter, Printer>();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            var petService = serviceProvider.GetRequiredService<IPetService>();
-            var ownerService = serviceProvider.GetRequiredService<IOwnerService>();
-            Printer petPrinter = new Printer(petService, ownerService);
+            var petPrinter = serviceProvider.GetRequiredService<IPrinter>();
+            
+            petPrinter.ChooseMenu();
         }
     }
 }
