@@ -10,7 +10,7 @@ namespace TPetshop2019.Core.ApplicationServices
         /// Gets the list of current pets
         /// </summary>
         /// <returns> an IEnumerable list of pets</returns>
-        IEnumerable<Pet> GetPets();
+        List<Pet> GetPets();
 
         /// <summary>
         /// Creates a pet based on the specified parameters
@@ -51,6 +51,11 @@ namespace TPetshop2019.Core.ApplicationServices
         /// <param name="pet"></param>
         /// <returns>Returns the deleted pet</returns>
         Pet DeletePet(Pet pet);
+
+        List<Pet> sortPets();
+
+        List<Pet> GetFiveCheapestPets(); 
+        
 
         bool ValidateId(int id);
     }

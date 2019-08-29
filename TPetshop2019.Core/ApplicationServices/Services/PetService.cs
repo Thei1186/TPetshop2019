@@ -15,9 +15,9 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             this._petRepo = petRepo;
         }
 
-        public IEnumerable<Pet> GetPets()
+        public List<Pet> GetPets()
         {
-            return this._petRepo.ReadPets();
+            return this._petRepo.ReadPets().ToList();
         }
 
         public Pet CreatePet(string name, string colour, string type, double price, DateTime birthDate)
@@ -31,6 +31,23 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                     Type = type
                 };
             return this._petRepo.AddPet(p1);
+        }
+
+        public List<Pet> GetFiveCheapestPets()
+        {
+            var listToSort = GetPets().OrderBy(pets => pets.Price).ToList();
+            if (listToSort.Count > 5)
+            {
+                var sortedList = new List<Pet>();
+
+                for (int i = 0; i < 4; i++)
+                {
+                    sortedList[i] = listToSort[i];
+                }
+                return sortedList;
+            }
+
+            return listToSort;
         }
 
         public bool ValidateId(int id)
@@ -63,12 +80,19 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                 p1.SoldDate = soldDate;
                 p1.Type = type;
             }
+            
             return this._petRepo.UpdatePet(p1);
         }
 
         public Pet DeletePet(Pet pet)
         {
             return this._petRepo.RemovePet(pet.Id);
+        }
+
+        public List<Pet> sortPets()
+        {
+            var listToSort = GetPets().OrderBy(pets => pets.Price).ToList();
+            return listToSort;
         }
     }
 
