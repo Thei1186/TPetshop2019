@@ -130,7 +130,7 @@ namespace TPetshop2019.ShopConsole
                         ListAllPets();
                         break;
                     case 6:
-                        searchPets();
+                        SearchPets();
                         break;
                     case 7:
                         OrderPetListByPrice();
@@ -150,45 +150,45 @@ namespace TPetshop2019.ShopConsole
 
         public void OrderPetListByPrice()
         {
-            PrintList(this._petService.sortPets());
-        }
-
-        public void PrintList(IEnumerable<Pet> listToPrint)
-        {
-            foreach (var pet in listToPrint)
+            var sortedPets = _petService.sortPets();
+            foreach (var pet in sortedPets)
             {
-                Console.Write(
-                    $"Pet found: \nId: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
-                    $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
-                    $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
+                PrintPetInfo(pet);
             }
         }
 
         public void FindFiveCheapestPets()
         {
-            PrintList(this._petService.GetFiveCheapestPets());
-        }
-        public void searchPets()
-        {
-            string query = GetInput("Write your search query:");
-            foreach (var pet in this._petService.GetPets())
+            var cheapestPets = _petService.GetFiveCheapestPets();
+            foreach (var pet in cheapestPets)
             {
-                if (pet.Type.ToLower().Contains(query.ToLower()))
-                {
-                    Console.WriteLine("Name: "+ pet.Name + " "+ "Type: "+ pet.Type);
-                }
+                PrintPetInfo(pet); 
             }
+        }
+        public void SearchPets()
+        {
+            var query = GetInput("Write the type of pet you want to search for");
+            var searchResults = _petService.SearchPets(query);
+            foreach (var pet in searchResults)
+            {
+                PrintPetInfo(pet);       
+            }
+        }
+
+        public void PrintPetInfo(Pet pet)
+        {
+            Console.Write(
+                $"\nPet found: \nId: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
+                $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
+                $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
+            Console.WriteLine("\n");
         }
         private void ListAllPets()
         {
             Console.WriteLine("Listing all pets \n");
             foreach (var pet in this._petService.GetPets())
             {
-                Console.Write(
-                    $"Pet found: \nId: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
-                    $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
-                    $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
-                Console.WriteLine("\n");
+               PrintPetInfo(pet);
             }
 
         }
@@ -240,9 +240,7 @@ namespace TPetshop2019.ShopConsole
             if (searchId != 0)
             {
                Pet pet = this._petService.ReadPet(searchId);
-               Console.Write($"Pet found: Id: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" + 
-                             $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
-                             $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
+               PrintPetInfo(pet);
             }
         }
 

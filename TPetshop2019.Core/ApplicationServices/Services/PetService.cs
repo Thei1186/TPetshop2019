@@ -50,6 +50,21 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return listToSort;
         }
 
+        public List<Pet> SearchPets(string query)
+        {
+            var petMatchList = new List<Pet>();
+            foreach (var pet in GetPets())
+            {
+                if (pet.Type.ToLower().Contains(query.ToLower()))
+                {
+                    petMatchList.Add(pet);
+                }
+            }
+
+            return petMatchList;
+        }
+
+
         public bool ValidateId(int id)
         {
                 if (id > 0 )

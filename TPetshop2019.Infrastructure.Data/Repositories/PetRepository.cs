@@ -31,6 +31,8 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
                 pets.Add(pet);
             }
 
+            FakeDB.PetTable = pets;
+
             return pet;
         }
 

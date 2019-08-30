@@ -52,10 +52,26 @@ namespace TPetshop2019.Core.ApplicationServices
         /// <returns>Returns the deleted pet</returns>
         Pet DeletePet(Pet pet);
 
+        /// <summary>
+        /// Sort pets 
+        /// </summary>
+        /// <returns>A list of pets</returns>
         List<Pet> sortPets();
 
-        List<Pet> GetFiveCheapestPets(); 
-        
+        /// <summary>
+        /// Gets the five cheapest pets or returns the list
+        /// if length is under 5
+        /// </summary>
+        /// <returns></returns>
+        List<Pet> GetFiveCheapestPets();
+
+       /// <summary>
+       /// Searches for pets that fit the query
+       /// </summary>
+       /// <param name="query"></param>
+       /// <returns>A list of pets that match query</returns>
+        List<Pet> SearchPets(string query);
+
 
         bool ValidateId(int id);
     }
