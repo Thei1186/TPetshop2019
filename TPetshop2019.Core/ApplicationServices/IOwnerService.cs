@@ -6,7 +6,7 @@ namespace TPetshop2019.Core.ApplicationServices
     public interface IOwnerService
     {
         Owner CreateOwner(string firstName, string lastName, string address, string phoneNr, string email);
-        Owner ReadOwner(Owner owner);
+        Owner ReadOwner(int id);
         Owner UpdateOwner(int id, string firstName, string lastName, string address, string phoneNr, string email);
         Owner DeleteOwner(Owner owner);
         List<Owner> ReadAllOwners();

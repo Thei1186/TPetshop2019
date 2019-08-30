@@ -83,7 +83,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         public Pet UpdatePet(int id, string name, string type, string colour, double price,
             DateTime birthdate, DateTime soldDate, Owner previousOwner)
         {
-            Pet p1 = this._petRepo.ReadPets().FirstOrDefault(pet => pet.Id == id);
+            Pet p1 = ReadPet(id);
 
             if (p1 != null)
             {
