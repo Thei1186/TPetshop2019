@@ -110,9 +110,17 @@ namespace TPetshop2019.ShopConsole
 
         private void ListAllOwners()
         {
-            foreach (var owner in _ownerService.ReadAllOwners())
+            var owners = this._ownerService.ReadAllOwners();
+            if (owners.Count > 0)
             {
-                PrintOwnerInfo(owner);
+                foreach (var owner in owners)
+                {
+                    PrintOwnerInfo(owner);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No owners were found");
             }
         }
 
@@ -143,7 +151,7 @@ namespace TPetshop2019.ShopConsole
         {
             Console.Write(
                 $"\nOwner found: \nId: {owner.Id}\nName: {owner.FirstName + " " + owner.LastName}\n" +
-                $"Email: {owner.Email}\nAddress: {owner.Address}\n Colour: {owner.PhoneNumber}");
+                $"Email: {owner.Email}\nAddress: {owner.Address}\nPhone number: {owner.PhoneNumber}");
             Console.WriteLine("\n");
         }
 
