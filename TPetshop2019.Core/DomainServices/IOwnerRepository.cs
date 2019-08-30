@@ -6,5 +6,8 @@ namespace TPetshop2019.Core.DomainServices
     public interface IOwnerRepository
     {
         IEnumerable<Owner> GetOwners();
+        Owner CreateOwner(Owner owner);
+        Owner UpdateOwner(Owner owner);
+        Owner DeleteOwner(Owner owner);
     }
 }
