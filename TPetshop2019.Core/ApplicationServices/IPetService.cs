@@ -72,7 +72,12 @@ namespace TPetshop2019.Core.ApplicationServices
        /// <returns>A list of pets that match query</returns>
         List<Pet> SearchPets(string query);
 
-
-        bool ValidateId(int id);
+       /// <summary>
+        /// Adds a previous owner to the parsed pet
+        /// </summary>
+        /// <param name="newPet"></param>
+        /// <param name="prevOwner"></param>
+        /// <returns>The changed pet</returns>
+        Pet AddOwnerToPet(Pet newPet, Owner prevOwner);
     }
 }

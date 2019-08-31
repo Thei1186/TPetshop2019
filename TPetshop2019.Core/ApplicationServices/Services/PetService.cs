@@ -15,6 +15,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             this._petRepo = petRepo;
         }
 
+        public Pet AddOwnerToPet(Pet newPet, Owner prevOwner)
+        {
+            newPet.PreviousOwner = prevOwner;
+            return newPet;
+        }
+
         public List<Pet> GetPets()
         {
             return this._petRepo.ReadPets().ToList();
@@ -40,9 +46,9 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             {
                 var sortedList = new List<Pet>();
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 5; i++)
                 {
-                    sortedList[i] = listToSort[i];
+                    sortedList.Add(listToSort[i]);
                 }
                 return sortedList;
             }
@@ -62,17 +68,6 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             }
 
             return petMatchList;
-        }
-
-
-        public bool ValidateId(int id)
-        {
-                if (id > 0 )
-                {
-                    return true;
-                }
-
-                return false;
         }
 
         public Pet ReadPet(int id)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using TPetshop2019.Core.ApplicationServices;
+using TPetshop2019.Core.DomainServices;
 using TPetshop2019.Core.Entity;
 
 namespace TPetshop2019.ShopConsole
@@ -14,6 +15,7 @@ namespace TPetshop2019.ShopConsole
     {
         private readonly IPetService _petService;
         private readonly IOwnerService _ownerService;
+        private readonly IMiscService _miscService;
 
         private static readonly string[] PetMenuItems = new string[]
             {"Create Pet", "Read Pet", "Update Pet", "Delete Pet", "List all Pets",
@@ -24,49 +26,11 @@ namespace TPetshop2019.ShopConsole
 
         private static readonly string[] MainMenuItems = new string[]
             {"Pet functions", "Owner functions"};
-        public Printer(IPetService petService, IOwnerService ownerService)
+        public Printer(IPetService petService, IOwnerService ownerService, IMiscService miscService)
         {
             _petService = petService;
             _ownerService = ownerService;
-        }
-
-        public void ChooseMenu()
-        {
-            ShowMenu(MainMenuItems);
-            var choice = Convert.ToInt32(GetInput("Choose which functions to access"));
-            switch (choice)
-            {
-                case 1:
-                    PetChosenMenu();
-                    break;
-                case 2:
-                    OwnerChosenMenu();
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-        private string GetInput(string msg)
-        {
-            Console.WriteLine(msg + "\n");
-            return Console.ReadLine();
-        }
-
-        public void ShowMenu(string[] menuItems)
-        {
-            //Console.Clear(); //Uncomment if you want console to clear between each choice
-
-            for (int i = 0; i < menuItems.Length; i++)
-            {
-                Console.WriteLine((i + 1) + ". " + menuItems[i]);
-            }
-        }
-        private void ExitToMainMenu()
-        {
-            Console.Clear();
-            ChooseMenu();
+            _miscService = miscService;
         }
 
         #region Owner methods
@@ -126,25 +90,53 @@ namespace TPetshop2019.ShopConsole
 
         private void DeleteOwner()
         {
-            int id = Convert.ToInt32(GetInput("Write the id of the owner you want deleted"));
-            this._ownerService.DeleteOwner(this._ownerService.ReadOwner(id));
+            int id;
+            var query = GetInput("\nWrite the id of the owner you want to delete");
+            while (!int.TryParse(query, out id))
+            {
+                Console.WriteLine("Please write a number");
+            }
+            if (this._miscService.ValidateId(id))
+            {
+                var ownerToDelete = this._ownerService.DeleteOwner(this._ownerService.ReadOwner(id));
+                Console.WriteLine($"The owner: {ownerToDelete.FirstName + " " + ownerToDelete.LastName} has been deleted");
+            }
+            else
+            {
+                Console.WriteLine($"No owner with the id: {id} were found as such no owners were deleted\n" +
+                                  $" Please verify the id of the owner, that you want to delete");
+            }
         }
 
         private void UpdateOwner()
         {
-            int id = Convert.ToInt32(GetInput("Write the id of the owner you want update"));
-            string firstName = GetInput("Write the owner's first name");
-            string lastName = GetInput("Write the owner's last name");
-            string email = GetInput("Write the owner's email");
-            string address = GetInput("Write the owner's address");
-            string phoneNumber = GetInput("Write the owner's phone number");
-            _ownerService.UpdateOwner(id, firstName, lastName, address, phoneNumber, email);
+            int id = Convert.ToInt32(GetInput("Write the id of the owner you want update\n"));
+            if (this._miscService.ValidateId(id))
+            {
+                string firstName = GetInput("Write the owner's first name");
+                string lastName = GetInput("Write the owner's last name");
+                string email = GetInput("Write the owner's email");
+                string address = GetInput("Write the owner's address");
+                string phoneNumber = GetInput("Write the owner's phone number\n");
+                _ownerService.UpdateOwner(id, firstName, lastName, address, phoneNumber, email);
+            }
+            else
+            {
+                Console.WriteLine("Id not valid, exiting method");
+            }
         }
 
         private void ReadOwner()
         {
             int id = Convert.ToInt32(GetInput("Write the id of the owner you want to view"));
-            PrintOwnerInfo(this._ownerService.ReadOwner(id));
+            if (this._miscService.ValidateId(id))
+            {
+                PrintOwnerInfo(this._ownerService.ReadOwner(id));
+            }
+            else
+            {
+                Console.WriteLine("Id not valid, exiting method");
+            }
         }
 
         private void PrintOwnerInfo(Owner owner)
@@ -155,20 +147,21 @@ namespace TPetshop2019.ShopConsole
             Console.WriteLine("\n");
         }
 
-        private void CreateOwner()
+        private Owner CreateOwner()
         {
             string firstName = GetInput("Write the owner's first name");
             string lastName = GetInput("Write the owner's last name");
             string email = GetInput("Write the owner's email");
             string address = GetInput("Write the owner's address");
             string phoneNumber = GetInput("Write the owner's phone number");
-            this._ownerService.CreateOwner(firstName, lastName, address,phoneNumber, email);
+            Console.WriteLine("\n");
+            return this._ownerService.CreateOwner(firstName, lastName, address,phoneNumber, email);
         }
 
         #endregion
 
 
-        #region Pet content
+        #region Pet methods
         public void PetChosenMenu()
         {
             var choice = 0;
@@ -237,10 +230,18 @@ namespace TPetshop2019.ShopConsole
         {
             var query = GetInput("Write the type of pet you want to search for");
             var searchResults = _petService.SearchPets(query);
-            foreach (var pet in searchResults)
+            if (searchResults != null)
             {
-                PrintPetInfo(pet);       
+                foreach (var pet in searchResults)
+                {
+                    PrintPetInfo(pet);
+                }
             }
+            else
+            {
+                Console.WriteLine("No results for the query: {0}", query);
+            }
+
         }
 
         public void PrintPetInfo(Pet pet)
@@ -254,11 +255,18 @@ namespace TPetshop2019.ShopConsole
         private void ListAllPets()
         {
             Console.WriteLine("Listing all pets \n");
-            foreach (var pet in this._petService.GetPets())
+            var petList = this._petService.GetPets();
+            if (petList != null)
             {
-               PrintPetInfo(pet);
+                foreach (var pet in petList)
+                {
+                 PrintPetInfo(pet);
+                }
             }
-
+            else
+            {
+                Console.WriteLine("There are currently no pets in the database list");
+            }
         }
 
         private void DeletePet()
@@ -269,7 +277,7 @@ namespace TPetshop2019.ShopConsole
             {
              Console.WriteLine("Please write a number");   
             }
-            if (this._petService.ValidateId(id))
+            if (this._miscService.ValidateId(id))
             {
                 var petToDelete = this._petService.ReadPet(id);
                 this._petService.DeletePet(petToDelete);
@@ -291,9 +299,10 @@ namespace TPetshop2019.ShopConsole
             var price = Convert.ToDouble(GetInput("Write the pet's price"));
             var birthdate = Convert.ToDateTime(GetInput("Write the pet's birthdate"));
             var soldDate = Convert.ToDateTime(GetInput("Write the pet's soldDate"));
-            var previousOwner = new Owner();
-            //PreviousOwner stuff is not yet made, therefore it is blank as it is needed in the update method
+            var previousOwner = CreateOwner();
+            
             this._petService.UpdatePet(id,name,type,colour,price,birthdate,soldDate,previousOwner);
+            Console.WriteLine($"The pet with Id: {id} has been updated\n");
         }
 
         private void ReadPet()
@@ -305,7 +314,7 @@ namespace TPetshop2019.ShopConsole
                 Console.WriteLine("Please write a number above 0");
             }
 
-            if (searchId != 0)
+            if (this._miscService.ValidateId(searchId))
             {
                Pet pet = this._petService.ReadPet(searchId);
                PrintPetInfo(pet);
@@ -316,7 +325,8 @@ namespace TPetshop2019.ShopConsole
         {
             if (pet.PreviousOwner != null)
             {
-                return pet.PreviousOwner.FirstName + " " + pet.PreviousOwner.LastName;
+                var ownerName = pet.PreviousOwner.FirstName + " " + pet.PreviousOwner.LastName;
+                return ownerName;
             }
 
             return "No Previous Owner";
@@ -328,8 +338,79 @@ namespace TPetshop2019.ShopConsole
             var type = GetInput("Write the pet's type");
             var price = Convert.ToDouble(GetInput("Write the pet's price"));
             var birthdate = Convert.ToDateTime(GetInput("Write the pet's birthdate"));
+            var newPet = this._petService.CreatePet(name, colour, type, price, birthdate);
 
-            this._petService.CreatePet(name, colour, type, price, birthdate);
+            if (ValidateChoice("Do you want to add a previous owner for the new pet?"))
+            {
+                var previousOwner = CreateOwner();
+                this._petService.AddOwnerToPet(newPet, previousOwner);
+            }
+
+            Console.WriteLine($"The pet named: {newPet.Name} has been created");
+        }
+        #endregion
+
+        #region Misc methods
+        private bool ValidateChoice(string msg)
+        {
+            Console.WriteLine(msg + "\n" + "press Y for yes or N for no");
+            var choice = Console.ReadLine();
+            if (choice == null || !choice.ToLower().Equals("y") && !choice.ToLower().Equals("n"))
+            {
+                Console.WriteLine("Invalid input, returning to menu");
+            }
+            else if (choice.ToLower().Equals("y"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void ChooseMenu()
+        {
+            Console.WriteLine("Choose which functions to access");
+            ShowMenu(MainMenuItems);
+            int choice;
+            while (!int.TryParse(Console.ReadLine(),out choice))
+            {
+                Console.WriteLine("Please write a number");
+            }
+            switch (choice)
+            {
+                case 1:
+                    PetChosenMenu();
+                    break;
+                case 2:
+                    OwnerChosenMenu();
+                    break;
+                default:
+                    Console.WriteLine("\nPlease write either 1 or 2\n");
+                    ChooseMenu();
+                    break;
+            }
+
+        }
+
+        private string GetInput(string msg)
+        {
+            Console.WriteLine(msg + "\n");
+            return Console.ReadLine();
+        }
+
+        public void ShowMenu(string[] menuItems)
+        {
+            //Console.Clear(); //Uncomment if you want console to clear between each choice
+
+            for (int i = 0; i < menuItems.Length; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + menuItems[i]);
+            }
+        }
+        private void ExitToMainMenu()
+        {
+            Console.Clear();
+            ChooseMenu();
         }
         #endregion
 

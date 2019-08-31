@@ -43,22 +43,66 @@ namespace TPetshop2019.Infrastructure.Data
                 Name = "Peter Barker",
                 PreviousOwner = peter,
                 Price = 350,
-                Type = "Corgi"
+                Type = "Dog"
             };
             
             Pet p2 = new Pet
             {
                 Id = PetId++,
                 Birthdate = new DateTime(2014, 4, 20),
-                Colour = "light Brown",
+                Colour = "Dark Red",
                 Name = "Magmadar",
                 PreviousOwner = lars,
                 Price = 750.95,
-                Type = "Poodle",
+                Type = "Dog",
                 SoldDate = new DateTime(2019,8,27)
             };
 
-            PetTable = new List<Pet>{p1, p2};
+            Pet p3 = new Pet
+            {
+                Id = PetId++,
+                Birthdate = new DateTime(2004, 8, 5),
+                Colour = "Dark Brown",
+                Name = "Ser Slithers",
+                PreviousOwner = lars,
+                Price = 557.35,
+                Type = "Snake",
+            };
+
+            Pet p4 = new Pet
+            {
+                Id = PetId++,
+                Birthdate = new DateTime(2018, 2, 25),
+                Colour = "Pink",
+                Name = "Emergency Bacon Supply",
+                PreviousOwner = peter,
+                Price = 787,
+                Type = "Pig",
+            };
+
+            Pet p5 = new Pet
+            {
+                Id = PetId++,
+                Birthdate = new DateTime(2004, 8, 5),
+                Colour = "White",
+                Name = "MissHoots",
+                PreviousOwner = lars,
+                Price = 157.35,
+                Type = "Owl"
+            };
+
+            Pet p6 = new Pet
+            {
+                Id = PetId++,
+                Birthdate = new DateTime(2016, 1, 5),
+                Colour = "Tan",
+                Name = "McBleatsALot",
+                PreviousOwner = lars,
+                Price = 451.35,
+                Type = "Goat"
+            };
+
+            PetTable = new List<Pet>{p1, p2, p3, p4, p5, p6};
             OwnerTable = new List<Owner>{peter, lars};
         }
     }

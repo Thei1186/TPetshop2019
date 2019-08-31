@@ -22,6 +22,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                 Address = address,
                 Email = email,
                 FirstName = firstName,
+                LastName = lastName,
                 PhoneNumber = phoneNr
             };
             return _ownerRepo.CreateOwner(owner);
