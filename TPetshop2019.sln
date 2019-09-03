@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPetshop2019.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPetshop2019.ShopConsole", "TPetshop2019.ShopConsole\TPetshop2019.ShopConsole.csproj", "{AD5F416B-F17E-466A-B241-A6358877DEB5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6B22DDC1-A8E2-41A5-AE95-C61FD34D3F6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D0829A3D-874B-454A-BE1F-5A4367B1C122}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{A9F6D8F1-D5A2-4966-9AE6-8047E0EBF8CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,5 +45,11 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8715F2F7-7753-4F9B-BBFE-F7665C829551}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C63CA8F-4863-4269-9E00-56BB11B702FE} = {6B22DDC1-A8E2-41A5-AE95-C61FD34D3F6A}
+		{7A994BE2-2A61-4EBB-9FF9-F0B416E1351B} = {6B22DDC1-A8E2-41A5-AE95-C61FD34D3F6A}
+		{053C4634-E683-4D3B-BC56-470785622D3C} = {D0829A3D-874B-454A-BE1F-5A4367B1C122}
+		{AD5F416B-F17E-466A-B241-A6358877DEB5} = {A9F6D8F1-D5A2-4966-9AE6-8047E0EBF8CE}
 	EndGlobalSection
 EndGlobal
