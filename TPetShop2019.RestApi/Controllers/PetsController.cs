@@ -34,11 +34,12 @@ namespace TPetShop2019.RestApi.Controllers
                 throw;
             }
         }
-
+        
+        // POST api/pets
         [HttpPut]
-        public void Post([FromBody] Pet pet)
+        public Pet Post([FromBody] Pet pet)
         {
-            _petService.CreatePet(pet);
+           return _petService.CreatePet(pet);
         }
     }
 }
