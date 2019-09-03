@@ -26,7 +26,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return this._petRepo.ReadPets().ToList();
         }
 
-        public Pet CreatePet(string name, string colour, string type, double price, DateTime birthDate)
+        public Pet NewPet(string name, string colour, string type, double price, DateTime birthDate)
         {
             Pet p1 = new Pet
                 {
@@ -36,7 +36,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                     Price = price,
                     Type = type
                 };
-            return this._petRepo.AddPet(p1);
+            return p1;
+        }
+
+        public Pet CreatePet(Pet pet)
+        {
+            return _petRepo.AddPet(pet);
         }
 
         public List<Pet> GetFiveCheapestPets()

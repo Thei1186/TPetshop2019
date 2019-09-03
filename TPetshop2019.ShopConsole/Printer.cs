@@ -338,7 +338,7 @@ namespace TPetshop2019.ShopConsole
             var type = GetInput("Write the pet's type");
             var price = Convert.ToDouble(GetInput("Write the pet's price"));
             var birthdate = Convert.ToDateTime(GetInput("Write the pet's birthdate"));
-            var newPet = this._petService.CreatePet(name, colour, type, price, birthdate);
+            var newPet = this._petService.NewPet(name, colour, type, price, birthdate);
 
             if (ValidateChoice("Do you want to add a previous owner for the new pet?"))
             {

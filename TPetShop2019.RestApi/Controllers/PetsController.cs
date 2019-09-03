@@ -38,7 +38,7 @@ namespace TPetShop2019.RestApi.Controllers
         [HttpPut]
         public void Post([FromBody] Pet pet)
         {
-            
+            _petService.CreatePet(pet);
         }
     }
 }

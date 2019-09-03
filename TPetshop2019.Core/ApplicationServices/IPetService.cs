@@ -21,7 +21,14 @@ namespace TPetshop2019.Core.ApplicationServices
         /// <param name="price"></param>
         /// <param name="birthDate"></param>
         /// <returns>Returns the pet which were created</returns>
-        Pet CreatePet(string name, string colour, string type, double price, DateTime birthDate);
+        Pet NewPet(string name, string colour, string type, double price, DateTime birthDate);
+
+        /// <summary>
+        /// Calls the repository's create pet method and parses in the pet it receives from the NewPet method'
+        /// </summary>
+        /// <param name="pet"></param>
+        /// <returns>The new pet</returns>
+        Pet CreatePet(Pet pet);
 
         /// <summary>
         /// Accesses the pet with the matching Id
