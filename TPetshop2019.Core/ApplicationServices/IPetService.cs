@@ -53,6 +53,13 @@ namespace TPetshop2019.Core.ApplicationServices
             DateTime birthdate, DateTime soldDate, Owner previousOwner);
 
         /// <summary>
+        /// Gets the updated pet and parses it to the repository
+        /// </summary>
+        /// <param name="petToUpdate"></param>
+        /// <returns>The updated pet</returns>
+        Pet MakeUpdatedPet(Pet petToUpdate);
+        
+        /// <summary>
         /// Deletes the pet
         /// </summary>
         /// <param name="pet"></param>

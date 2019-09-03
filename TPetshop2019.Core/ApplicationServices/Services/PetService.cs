@@ -79,7 +79,8 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         {
             return this._petRepo.ReadPets().FirstOrDefault(pet => pet.Id == id);
         }
-
+        
+        // Old update method
         public Pet UpdatePet(int id, string name, string type, string colour, double price,
             DateTime birthdate, DateTime soldDate, Owner previousOwner)
         {
@@ -96,7 +97,22 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                 p1.Type = type;
             }
             
-            return this._petRepo.UpdatePet(p1);
+            return _petRepo.UpdatePet(p1);
+        }
+        
+        // New update method for the rest Api
+        public Pet MakeUpdatedPet(Pet petToUpdate)
+        {
+            var pet = ReadPet(petToUpdate.Id);
+            pet.Name = petToUpdate.Name;
+            pet.Birthdate = petToUpdate.Birthdate;
+            pet.Colour = petToUpdate.Colour;
+            pet.Price = petToUpdate.Price;
+            pet.Type = petToUpdate.Type;
+            pet.PreviousOwner = petToUpdate.PreviousOwner;
+            pet.SoldDate = petToUpdate.SoldDate;
+            
+            return pet;
         }
 
         public Pet DeletePet(Pet pet)

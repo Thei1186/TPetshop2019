@@ -36,10 +36,35 @@ namespace TPetShop2019.RestApi.Controllers
         }
         
         // POST api/pets
-        [HttpPut]
-        public Pet Post([FromBody] Pet pet)
+        [HttpPost]
+        public ActionResult<Pet> Post([FromBody] Pet pet)
         {
-           return _petService.CreatePet(pet);
+            if (string.IsNullOrEmpty(pet.Name))
+            {
+                return BadRequest("The pet needs a name");
+            }
+            return _petService.CreatePet(pet);
         }
+        
+        // DELETE api/pets
+        [HttpDelete("{id}")]
+        public ActionResult<Pet> Delete([FromBody] int id)
+        {
+            var petToDelete = _petService.ReadPet(id);
+            return _petService.DeletePet(petToDelete);
+        }
+        
+        // PUT api/pets
+        [HttpPut("{id}")]
+        public ActionResult<Pet> Update(int id, [FromBody] Pet pet)
+        {
+            if (id <= 0 || id != pet.Id)
+            {
+                return BadRequest("Parameter Id and pet ID must be the same");
+            }
+
+            return _petService.MakeUpdatedPet(pet);
+        }
+        
     }
 }
