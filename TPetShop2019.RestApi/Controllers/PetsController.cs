@@ -34,7 +34,18 @@ namespace TPetShop2019.RestApi.Controllers
                 throw;
             }
         }
-        
+
+        // GET api/pets/1
+        [HttpGet("{id}")]
+        public ActionResult<Pet> Get(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Id must be greater than 0");
+            }
+            return _petService.ReadPet(id);
+        }
+
         // POST api/pets
         [HttpPost]
         public ActionResult<Pet> Post([FromBody] Pet pet)
@@ -45,7 +56,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             return _petService.CreatePet(pet);
         }
-        
+
         // DELETE api/pets
         [HttpDelete("{id}")]
         public ActionResult<Pet> Delete([FromBody] int id)
@@ -53,7 +64,7 @@ namespace TPetShop2019.RestApi.Controllers
             var petToDelete = _petService.ReadPet(id);
             return _petService.DeletePet(petToDelete);
         }
-        
+
         // PUT api/pets
         [HttpPut("{id}")]
         public ActionResult<Pet> Update(int id, [FromBody] Pet pet)
@@ -63,7 +74,7 @@ namespace TPetShop2019.RestApi.Controllers
                 return BadRequest("Parameter Id and pet ID must be the same");
             }
 
-            return _petService.MakeUpdatedPet(pet);
+            return Ok(_petService.MakeUpdatedPet(pet));
         }
         
     }
