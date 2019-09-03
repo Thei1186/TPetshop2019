@@ -20,7 +20,7 @@ namespace TPetShop2019.RestApi.Controllers
             _petService = petService;
         }
 
-        // GET api/values
+        // GET api/pets
         [HttpGet]
         public ActionResult<IEnumerable<Pet>> Get()
         {
@@ -38,7 +38,7 @@ namespace TPetShop2019.RestApi.Controllers
         [HttpPut]
         public void Post([FromBody] Pet pet)
         {
-           
+            
         }
     }
 }
