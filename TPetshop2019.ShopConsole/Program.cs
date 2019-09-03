@@ -17,8 +17,8 @@ namespace TPetshop2019.ShopConsole
 
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<IPetRepository, PetRepository>();
-            serviceCollection.AddScoped<IOwnerRepository, OwnerRepository>();
             serviceCollection.AddScoped<IPetService, PetService>();
+            serviceCollection.AddScoped<IOwnerRepository, OwnerRepository>();
             serviceCollection.AddScoped<IOwnerService, OwnerService>();
             serviceCollection.AddScoped<IMiscService,MiscService>();
             serviceCollection.AddScoped<IPrinter, Printer>();
