@@ -59,7 +59,7 @@ namespace TPetShop2019.RestApi.Controllers
 
         // DELETE api/pets
         [HttpDelete("{id}")]
-        public ActionResult<Pet> Delete([FromBody] int id)
+        public ActionResult<Pet> Delete(int id)
         {
             var petToDelete = _petService.ReadPet(id);
             return _petService.DeletePet(petToDelete);
