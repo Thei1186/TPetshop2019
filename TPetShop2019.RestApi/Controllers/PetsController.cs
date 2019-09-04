@@ -85,7 +85,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
+                return BadRequest(e.Message);
                 throw;
             }
         }

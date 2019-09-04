@@ -10,10 +10,13 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 {
     public class OwnerService: IOwnerService
     {
-        private IOwnerRepository _ownerRepo;
-        public OwnerService(IOwnerRepository ownerRepo)
+        private readonly IOwnerRepository _ownerRepo;
+        private readonly IValidateIdService _valiService;
+
+        public OwnerService(IOwnerRepository ownerRepo, IValidateIdService valiService)
         {
             this._ownerRepo = ownerRepo;
+            this._valiService = valiService;
         }
 
         public Owner NewOwner(string firstName, string lastName, string address, string phoneNr, string email)

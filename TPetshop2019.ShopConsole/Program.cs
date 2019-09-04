@@ -20,7 +20,7 @@ namespace TPetshop2019.ShopConsole
             serviceCollection.AddScoped<IPetService, PetService>();
             serviceCollection.AddScoped<IOwnerRepository, OwnerRepository>();
             serviceCollection.AddScoped<IOwnerService, OwnerService>();
-            serviceCollection.AddScoped<IValidationService,ValidationService>();
+            serviceCollection.AddScoped<IValidateIdService,ValidationService>();
             serviceCollection.AddScoped<IPrinter, Printer>();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();

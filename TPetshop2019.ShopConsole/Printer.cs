@@ -15,7 +15,7 @@ namespace TPetshop2019.ShopConsole
     {
         private readonly IPetService _petService;
         private readonly IOwnerService _ownerService;
-        private readonly IValidationService _validationService;
+        private readonly IValidateIdService _validationService;
 
         private static readonly string[] PetMenuItems = new string[]
             {"Create Pet", "Read Pet", "Update Pet", "Delete Pet", "List all Pets",
@@ -26,7 +26,7 @@ namespace TPetshop2019.ShopConsole
 
         private static readonly string[] MainMenuItems = new string[]
             {"Pet functions", "Owner functions"};
-        public Printer(IPetService petService, IOwnerService ownerService, IValidationService validationService)
+        public Printer(IPetService petService, IOwnerService ownerService, IValidateIdService validationService)
         {
             _petService = petService;
             _ownerService = ownerService;

@@ -34,6 +34,7 @@ namespace TPetShop2019.RestApi
             services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
+            services.AddScoped<IValidateIdService, ValidateIdService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

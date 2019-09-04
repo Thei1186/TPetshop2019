@@ -9,17 +9,22 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 {
     public class PetService : IPetService
     {
-        private IPetRepository _petRepo;
-        private IValidationService _valiService;
+        private readonly IPetRepository _petRepo;
+        private readonly IValidateIdService _vIdService;
 
-        public PetService(IPetRepository petRepo, IValidationService valiService)
+        public PetService(IPetRepository petRepo, IValidateIdService validateIdService)
         {
             this._petRepo = petRepo;
-            this._valiService = valiService;
+            this._vIdService = validateIdService;
+
         }
 
         public Pet AddOwnerToPet(Pet newPet, Owner prevOwner)
         {
+            if (newPet == null || prevOwner == null)
+            {
+                throw new InvalidDataException();
+            }
             newPet.PreviousOwner = prevOwner;
             return newPet;
         }
@@ -29,21 +34,30 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return this._petRepo.ReadPets().ToList();
         }
 
+        //Old method for console
         public Pet NewPet(string name, string colour, string type, double price, DateTime birthDate)
         {
-            Pet p1 = new Pet
+            Pet p1 = new Pet(name)
                 {
                     Birthdate = birthDate,
                     Colour = colour,
-                    Name = name,
                     Price = price,
                     Type = type
                 };
+            if (p1.Name == null || p1.Name.Equals(" "))
+            {
+                throw new InvalidDataException("The pet needs a name");
+            }
             return CreatePet(p1);
         }
 
+        //New method for RestApi
         public Pet CreatePet(Pet pet)
         {
+            if (pet == null)
+            {
+                throw new InvalidDataException("Pet parameter came in null, so no pet was created");
+            }
             return _petRepo.AddPet(pet);
         }
 
@@ -74,15 +88,14 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                     petMatchList.Add(pet);
                 }
             }
-
             return petMatchList;
         }
 
         public Pet ReadPet(int id)
         {
-            if (!_valiService.ValidateId(id))
+            if (!_vIdService.ValidateId(id))
             {
-                throw new InvalidDataException();
+                throw new InvalidDataException($"No pet was found with the id: {id}");
             }
             return this._petRepo.ReadPets().FirstOrDefault(pet => pet.Id == id);
         }
@@ -102,14 +115,18 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                 p1.Price = price;
                 p1.SoldDate = soldDate;
                 p1.Type = type;
+                return _petRepo.UpdatePet(p1);
             }
-            
-            return _petRepo.UpdatePet(p1);
+            return null;
         }
         
         // New update method for the rest Api
         public Pet MakeUpdatedPet(Pet petToUpdate)
         {
+            if (petToUpdate == null)
+            {
+                throw new InvalidDataException("The pet received through the parameter was null");
+            }
             var pet = ReadPet(petToUpdate.Id);
             pet.Name = petToUpdate.Name;
             pet.Birthdate = petToUpdate.Birthdate;
@@ -124,6 +141,10 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public Pet DeletePet(Pet pet)
         {
+            if (pet == null)
+            {
+                throw new InvalidDataException("Pet was null so nothing was deleted");
+            }
             return this._petRepo.RemovePet(pet.Id);
         }
 

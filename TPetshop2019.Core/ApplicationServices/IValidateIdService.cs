@@ -1,6 +1,6 @@
 ﻿namespace TPetshop2019.Core.ApplicationServices
 {
-    public interface IValidationService
+    public interface IValidateIdService
     {
         /// <summary>
         /// Checks if an id is legal, i.e. above 0
