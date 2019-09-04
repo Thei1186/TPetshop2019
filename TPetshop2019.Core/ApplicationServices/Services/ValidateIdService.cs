@@ -1,4 +1,6 @@
-﻿namespace TPetshop2019.Core.ApplicationServices.Services
+﻿using System.IO;
+
+namespace TPetshop2019.Core.ApplicationServices.Services
 {
     public class ValidateIdService: IValidateIdService
     {
@@ -9,7 +11,7 @@
                 return true;
             }
 
-            return false;
+            throw new InvalidDataException($"The id: {id} is not valid, please use an id greater than 0");
         }
     }
 }

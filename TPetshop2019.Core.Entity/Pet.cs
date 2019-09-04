@@ -13,10 +13,6 @@ namespace TPetshop2019.Core.Entity
         public Owner PreviousOwner { get; set; }
         public double Price { get; set; }
 
-        public Pet(string name)
-        {
-            Name = name;
-        }
     }
 
 }

@@ -10,12 +10,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
     public class PetService : IPetService
     {
         private readonly IPetRepository _petRepo;
-        private readonly IValidateIdService _vIdService;
+        private readonly IValidateIdService _validateIdService;
 
         public PetService(IPetRepository petRepo, IValidateIdService validateIdService)
         {
             this._petRepo = petRepo;
-            this._vIdService = validateIdService;
+            this._validateIdService = validateIdService;
 
         }
 
@@ -37,17 +37,19 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         //Old method for console
         public Pet NewPet(string name, string colour, string type, double price, DateTime birthDate)
         {
-            Pet p1 = new Pet(name)
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new InvalidDataException("The pet needs a name");
+            }
+            Pet p1 = new Pet
                 {
+                    Name = name,
                     Birthdate = birthDate,
                     Colour = colour,
                     Price = price,
                     Type = type
                 };
-            if (p1.Name == null || p1.Name.Equals(" "))
-            {
-                throw new InvalidDataException("The pet needs a name");
-            }
+            
             return CreatePet(p1);
         }
 
@@ -93,7 +95,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public Pet ReadPet(int id)
         {
-            if (!_vIdService.ValidateId(id))
+            if (!_validateIdService.ValidateId(id))
             {
                 throw new InvalidDataException($"No pet was found with the id: {id}");
             }

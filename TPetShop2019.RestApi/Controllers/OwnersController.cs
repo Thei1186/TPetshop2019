@@ -30,8 +30,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
@@ -45,8 +44,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
@@ -60,8 +58,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
@@ -76,8 +73,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
@@ -96,8 +92,7 @@ namespace TPetShop2019.RestApi.Controllers
             }
             catch (Exception e)
             {
-                BadRequest(e.Message);
-                throw;
+               return BadRequest(e.Message);
             }
         }
     }
