@@ -1,6 +1,6 @@
 ﻿namespace TPetshop2019.Core.ApplicationServices.Services
 {
-    public class MiscService: IMiscService
+    public class ValidationService: IValidationService
     {
         public bool ValidateId(int id)
         {

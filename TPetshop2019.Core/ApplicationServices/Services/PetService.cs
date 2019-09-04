@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TPetshop2019.Core.DomainServices;
 using TPetshop2019.Core.Entity;
@@ -9,10 +10,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
     public class PetService : IPetService
     {
         private IPetRepository _petRepo;
+        private IValidationService _valiService;
 
-        public PetService(IPetRepository petRepo)
+        public PetService(IPetRepository petRepo, IValidationService valiService)
         {
             this._petRepo = petRepo;
+            this._valiService = valiService;
         }
 
         public Pet AddOwnerToPet(Pet newPet, Owner prevOwner)
@@ -36,7 +39,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                     Price = price,
                     Type = type
                 };
-            return p1;
+            return CreatePet(p1);
         }
 
         public Pet CreatePet(Pet pet)
@@ -77,6 +80,10 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public Pet ReadPet(int id)
         {
+            if (!_valiService.ValidateId(id))
+            {
+                throw new InvalidDataException();
+            }
             return this._petRepo.ReadPets().FirstOrDefault(pet => pet.Id == id);
         }
         

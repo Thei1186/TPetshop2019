@@ -11,77 +11,22 @@ namespace TPetShop2019.RestApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetsController : ControllerBase
+    public class OwnersController : ControllerBase
     {
-        private readonly IPetService _petService;
+        private readonly IOwnerService _ownerService;
 
-        public PetsController(IPetService petService)
+        public OwnersController(IOwnerService ownerService)
         {
-            _petService = petService;
+            _ownerService = ownerService;
         }
 
-        // GET api/pets
+        // GET api/owners
         [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
+        public ActionResult<IEnumerable<Owner>> Get()
         {
             try
             {
-                return _petService.GetPets();
-            }
-            catch (Exception e)
-            {
-                BadRequest(e);
-                throw;
-            }
-        }
-
-        // GET api/pets/1
-        [HttpGet("{id}")]
-        public ActionResult<Pet> Get(int id)
-        {
-            try
-            {
-             if (id <= 0)
-             {
-                return BadRequest("Id must be greater than 0");
-             }
-             return _petService.ReadPet(id);
-            }
-            catch (Exception e)
-            {
-                BadRequest(e);
-                throw;
-            }
-        }
-
-        // POST api/pets
-        [HttpPost]
-        public ActionResult<Pet> Post([FromBody] Pet pet)
-        {
-            try
-            {
-              if (string.IsNullOrEmpty(pet.Name))
-              {
-                 return BadRequest("The pet needs a name");
-              }
-              return _petService.CreatePet(pet);
-            }
-            catch (Exception e)
-            {
-                BadRequest(e);
-                throw;
-            }
-        }
-
-        // DELETE api/pets
-        [HttpDelete("{id}")]
-        public ActionResult<Pet> Delete(int id)
-        {
-            try
-            {
-                var petToDelete = _petService.ReadPet(id);
-                return _petService.DeletePet(petToDelete);
-                
+                return _ownerService.ReadAllOwners();
             }
             catch (Exception e)
             {
@@ -90,19 +35,64 @@ namespace TPetShop2019.RestApi.Controllers
             }
         }
 
-        // PUT api/pets
-        [HttpPut("{id}")]
-        public ActionResult<Pet> Update(int id, [FromBody] Pet pet)
+        // GET api/owners
+        [HttpGet("{id}")]
+        public ActionResult<Owner> Get(int id)
         {
             try
             {
-                if (id <= 0 || id != pet.Id)
+                return _ownerService.ReadOwner(id);
+            }
+            catch (Exception e)
+            {
+                BadRequest(e.Message);
+                throw;
+            }
+        }
+
+        // POST api/owners
+        [HttpPost]
+        public ActionResult<Owner> Post([FromBody]Owner owner)
+        {
+            try
+            {
+                 return _ownerService.CreateOwner(owner);
+            }
+            catch (Exception e)
+            {
+                BadRequest(e.Message);
+                throw;
+            }
+        }
+
+        // DELETE api/owners
+        [HttpDelete("{id}")]
+        public ActionResult<Owner> Delete(int id)
+        {
+            try
+            {
+             var ownerToDelete = _ownerService.ReadOwner(id);
+             return Ok(_ownerService.DeleteOwner(ownerToDelete));
+            }
+            catch (Exception e)
+            {
+                BadRequest(e.Message);
+                throw;
+            }
+        }
+
+        // PUT api/owners
+        [HttpPut("{id}")]
+        public ActionResult<Owner> Put(int id, [FromBody] Owner owner)
+        {
+            try
+            {
+                if (id <= 0 || id != owner.Id)
                 {
                     return BadRequest("Parameter Id and pet ID must be the same");
                 }
 
-                return Ok(_petService.MakeUpdatedPet(pet));
-
+                return Ok(_ownerService.MakeUpdatedOwner(owner));
             }
             catch (Exception e)
             {
@@ -110,6 +100,5 @@ namespace TPetShop2019.RestApi.Controllers
                 throw;
             }
         }
-        
     }
 }

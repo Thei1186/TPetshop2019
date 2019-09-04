@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime;
 using TPetshop2019.Core.DomainServices;
@@ -15,7 +16,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             this._ownerRepo = ownerRepo;
         }
 
-        public Owner CreateOwner(string firstName, string lastName, string address, string phoneNr, string email)
+        public Owner NewOwner(string firstName, string lastName, string address, string phoneNr, string email)
         {
             Owner owner = new Owner
             {
@@ -25,6 +26,11 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                 LastName = lastName,
                 PhoneNumber = phoneNr
             };
+            return CreateOwner(owner);
+        }
+
+        public Owner CreateOwner(Owner owner)
+        {
             return _ownerRepo.CreateOwner(owner);
         }
 
@@ -47,7 +53,16 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             }
             return ownerToUpdate;
         }
-
+        public Owner MakeUpdatedOwner(Owner ownerToUpdate)
+        {
+            var owner = ReadOwner(ownerToUpdate.Id);
+            owner.FirstName = ownerToUpdate.FirstName;
+            owner.LastName = ownerToUpdate.LastName;
+            owner.Address = ownerToUpdate.Address;
+            owner.Email = ownerToUpdate.Email;
+            owner.PhoneNumber = ownerToUpdate.PhoneNumber;
+            return _ownerRepo.UpdateOwner(owner);
+        }
         public Owner DeleteOwner(Owner owner)
         {
             return _ownerRepo.DeleteOwner(owner);

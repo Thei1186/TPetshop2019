@@ -15,7 +15,7 @@ namespace TPetshop2019.ShopConsole
     {
         private readonly IPetService _petService;
         private readonly IOwnerService _ownerService;
-        private readonly IMiscService _miscService;
+        private readonly IValidationService _validationService;
 
         private static readonly string[] PetMenuItems = new string[]
             {"Create Pet", "Read Pet", "Update Pet", "Delete Pet", "List all Pets",
@@ -26,11 +26,11 @@ namespace TPetshop2019.ShopConsole
 
         private static readonly string[] MainMenuItems = new string[]
             {"Pet functions", "Owner functions"};
-        public Printer(IPetService petService, IOwnerService ownerService, IMiscService miscService)
+        public Printer(IPetService petService, IOwnerService ownerService, IValidationService validationService)
         {
             _petService = petService;
             _ownerService = ownerService;
-            _miscService = miscService;
+            _validationService = validationService;
         }
 
         #region Owner methods
@@ -96,7 +96,7 @@ namespace TPetshop2019.ShopConsole
             {
                 Console.WriteLine("Please write a number");
             }
-            if (this._miscService.ValidateId(id))
+            if (this._validationService.ValidateId(id))
             {
                 var ownerToDelete = this._ownerService.DeleteOwner(this._ownerService.ReadOwner(id));
                 Console.WriteLine($"The owner: {ownerToDelete.FirstName + " " + ownerToDelete.LastName} has been deleted");
@@ -111,7 +111,7 @@ namespace TPetshop2019.ShopConsole
         private void UpdateOwner()
         {
             int id = Convert.ToInt32(GetInput("Write the id of the owner you want update\n"));
-            if (this._miscService.ValidateId(id))
+            if (this._validationService.ValidateId(id))
             {
                 string firstName = GetInput("Write the owner's first name");
                 string lastName = GetInput("Write the owner's last name");
@@ -129,7 +129,7 @@ namespace TPetshop2019.ShopConsole
         private void ReadOwner()
         {
             int id = Convert.ToInt32(GetInput("Write the id of the owner you want to view"));
-            if (this._miscService.ValidateId(id))
+            if (this._validationService.ValidateId(id))
             {
                 PrintOwnerInfo(this._ownerService.ReadOwner(id));
             }
@@ -155,7 +155,7 @@ namespace TPetshop2019.ShopConsole
             string address = GetInput("Write the owner's address");
             string phoneNumber = GetInput("Write the owner's phone number");
             Console.WriteLine("\n");
-            return this._ownerService.CreateOwner(firstName, lastName, address,phoneNumber, email);
+            return this._ownerService.NewOwner(firstName, lastName, address,phoneNumber, email);
         }
 
         #endregion
@@ -277,7 +277,7 @@ namespace TPetshop2019.ShopConsole
             {
              Console.WriteLine("Please write a number");   
             }
-            if (this._miscService.ValidateId(id))
+            if (this._validationService.ValidateId(id))
             {
                 var petToDelete = this._petService.ReadPet(id);
                 this._petService.DeletePet(petToDelete);
@@ -314,7 +314,7 @@ namespace TPetshop2019.ShopConsole
                 Console.WriteLine("Please write a number above 0");
             }
 
-            if (this._miscService.ValidateId(searchId))
+            if (this._validationService.ValidateId(searchId))
             {
                Pet pet = this._petService.ReadPet(searchId);
                PrintPetInfo(pet);
