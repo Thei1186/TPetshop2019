@@ -23,7 +23,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         {
             if (newPet == null || prevOwner == null)
             {
-                throw new InvalidDataException();
+                throw new InvalidDataException("You need to specify an owner to add AND a pet to add the owner to");
             }
             newPet.PreviousOwner = prevOwner;
             return newPet;

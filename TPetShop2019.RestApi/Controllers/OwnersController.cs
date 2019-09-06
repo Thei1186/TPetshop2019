@@ -85,7 +85,7 @@ namespace TPetShop2019.RestApi.Controllers
             {
                 if (id <= 0 || id != owner.Id)
                 {
-                    return BadRequest("Parameter Id and pet ID must be the same");
+                    return BadRequest("Parameter Id and owner ID must be the same");
                 }
 
                 return Ok(_ownerService.MakeUpdatedOwner(owner));
