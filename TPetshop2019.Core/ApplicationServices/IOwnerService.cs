@@ -17,6 +17,12 @@ namespace TPetshop2019.Core.ApplicationServices
         Owner NewOwner(string firstName, string lastName, string address, string phoneNr, string email);
 
         /// <summary>
+        /// Gets a owner and also their former pets
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Owner ReadOwnerIncludePets(int id);
+        /// <summary>
         /// Creates a new owner in the database based on an owner object. Atm. used by the RestApi
         /// </summary>
         /// <param name="owner"></param>

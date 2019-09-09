@@ -13,11 +13,14 @@ namespace TPetshop2019.Core.ApplicationServices.Services
     {
         private readonly IOwnerRepository _ownerRepo;
         private readonly IValidateIdService _validateIdService;
+        private readonly IPetRepository _petRepo;
 
-        public OwnerService(IOwnerRepository ownerRepo, IValidateIdService validateIdService)
+        public OwnerService(IOwnerRepository ownerRepo, IValidateIdService validateIdService,
+            IPetRepository petRepo)
         {
             this._ownerRepo = ownerRepo;
             this._validateIdService = validateIdService;
+            this._petRepo = petRepo;
         }
 
         public Owner NewOwner(string firstName, string lastName, string address, string phoneNr, string email)
@@ -38,6 +41,13 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return CreateOwner(owner);
         }
 
+        public Owner ReadOwnerIncludePets(int id)
+        {
+            var owner = ReadOwner(id);
+            owner.Pets = _petRepo.ReadPets().Where(pet => pet.PreviousOwner.Id == owner.Id).ToList();
+            return owner;
+        }
+
         public Owner CreateOwner(Owner owner)
         {
             if (owner == null)
@@ -51,7 +61,16 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         {
             _validateIdService.ValidateId(id);
 
-            var ownerToGet = _ownerRepo.GetOwners().ToList().FirstOrDefault(owner => owner.Id == id);
+            var ownerToGet = _ownerRepo.GetOwners().Select(o => new Owner()
+            {
+                Id = o.Id,
+                FirstName = o.FirstName,
+                LastName = o.LastName,
+                Email = o.Email,
+                PhoneNumber = o.PhoneNumber,
+                Address = o.Address
+            }
+            ).ToList().FirstOrDefault(owner => owner.Id == id);
 
             if (ownerToGet == null)
             {

@@ -40,7 +40,7 @@ namespace TPetShop2019.RestApi.Controllers
         {
             try
             {
-                return _ownerService.ReadOwner(id);
+                return _ownerService.ReadOwnerIncludePets(id);
             }
             catch (Exception e)
             {
