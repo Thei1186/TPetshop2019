@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,8 +14,8 @@ using Microsoft.Extensions.Options;
 using TPetshop2019.Core.ApplicationServices;
 using TPetshop2019.Core.ApplicationServices.Services;
 using TPetshop2019.Core.DomainServices;
-using TPetshop2019.Infrastructure.Data;
-using TPetshop2019.Infrastructure.Data.Repositories;
+using TPetShop2019.Infrastructure.SQL;
+using TPetShop2019.Infrastructure.SQL.Repositories;
 
 namespace TPetShop2019.RestApi
 {
@@ -35,6 +36,10 @@ namespace TPetShop2019.RestApi
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IValidateIdService, ValidateIdService>();
+
+            services.AddDbContext<PetShopContext>(
+                opt => opt.UseSqlite("Data Source=Petshop.db")
+            );
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -43,7 +48,7 @@ namespace TPetShop2019.RestApi
         {
             if (env.IsDevelopment())
             {
-                FakeDB.InitData();
+               // FakeDB.InitData();
                 app.UseDeveloperExceptionPage();
             }
             else
