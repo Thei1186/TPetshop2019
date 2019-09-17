@@ -43,9 +43,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public Owner ReadOwnerIncludePets(int id)
         {
-            var owner = ReadOwner(id);
-            owner.Pets = _petRepo.ReadPets().Where(pet => pet.PreviousOwner.Id == owner.Id).ToList();
-            return owner;
+            return _ownerRepo.GetOwnerByIdIncludePets(id);
         }
 
         public Owner CreateOwner(Owner owner)

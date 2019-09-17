@@ -58,5 +58,10 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
             ).ToList().FirstOrDefault(owner => owner.Id == id);
             return ownerToGet;
         }
+
+        public Owner GetOwnerByIdIncludePets(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

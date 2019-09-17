@@ -58,7 +58,12 @@ namespace TPetShop2019.RestApi
             if (env.IsDevelopment())
             {
                // FakeDB.InitData();
-                app.UseDeveloperExceptionPage();
+               using (var scope = app.ApplicationServices.CreateScope())
+               {
+                   var context = scope.ServiceProvider.GetRequiredService<PetShopContext>();
+                   DbInitializer.SeedDb(context);
+               }
+               app.UseDeveloperExceptionPage();
             }
             else
             {
