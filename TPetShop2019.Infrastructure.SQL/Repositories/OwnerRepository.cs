@@ -34,9 +34,9 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Owner DeleteOwner(Owner owner)
         {
-            _context.Remove(owner);
+            var ownerToRemove = _context.Remove(owner).Entity;
             _context.SaveChanges();
-            return owner;
+            return ownerToRemove;
         }
 
         public Owner GetOwnerById(int id)
