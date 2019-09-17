@@ -80,6 +80,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             ownerToUpdate.PhoneNumber = phoneNr;
             return ownerToUpdate;
         }
+
         public Owner MakeUpdatedOwner(Owner ownerToUpdate)
         {
             var owner = ReadOwner(ownerToUpdate.Id);
