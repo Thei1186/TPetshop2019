@@ -43,5 +43,20 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
             FakeDB.OwnerTable = owners;
             return chosenOwner;
         }
+
+        public Owner GetOwnerById(int id)
+        {
+            var ownerToGet = FakeDB.OwnerTable.Select(o => new Owner()
+                {
+                    Id = o.Id,
+                    FirstName = o.FirstName,
+                    LastName = o.LastName,
+                    Email = o.Email,
+                    PhoneNumber = o.PhoneNumber,
+                    Address = o.Address
+                }
+            ).ToList().FirstOrDefault(owner => owner.Id == id);
+            return ownerToGet;
+        }
     }
 }

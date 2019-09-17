@@ -38,5 +38,10 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             _context.SaveChanges();
             return owner;
         }
+
+        public Owner GetOwnerById(int id)
+        {
+            return _context.Owner.FirstOrDefault(o => o.Id == id);
+        }
     }
 }

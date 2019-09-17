@@ -31,5 +31,12 @@ namespace TPetshop2019.Core.DomainServices
         /// <param name="id"></param>
         /// <returns>The removed pet</returns>
         Pet RemovePet(int id);
+
+        /// <summary>
+        /// Gets a pet by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The pet with the given id</returns>
+        Pet GetSinglePetById(int id);
     }
 }

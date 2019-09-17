@@ -38,5 +38,10 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             _context.SaveChanges();
             return entityRemoved;
         }
+
+        public Pet GetSinglePetById(int id)
+        {
+            return _context.Pets.FirstOrDefault(pet => pet.Id == id);
+        }
     }
 }

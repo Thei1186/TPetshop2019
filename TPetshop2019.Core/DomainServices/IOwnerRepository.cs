@@ -9,5 +9,6 @@ namespace TPetshop2019.Core.DomainServices
         Owner CreateOwner(Owner owner);
         Owner UpdateOwner(Owner owner);
         Owner DeleteOwner(Owner owner);
+        Owner GetOwnerById(int id);
     }
 }

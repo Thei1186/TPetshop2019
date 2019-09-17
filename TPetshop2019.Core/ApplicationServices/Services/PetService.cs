@@ -97,9 +97,10 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         {
             if (!_validateIdService.ValidateId(id))
             {
-                throw new InvalidDataException($"No pet was found with the id: {id}");
+                throw new InvalidDataException($"The id: {id} is invalid");
             }
-            return this._petRepo.ReadPets().FirstOrDefault(pet => pet.Id == id);
+
+            return _petRepo.GetSinglePetById(id);
         }
         
         // Old update method

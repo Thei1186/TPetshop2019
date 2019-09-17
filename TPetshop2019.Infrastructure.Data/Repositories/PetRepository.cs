@@ -44,5 +44,10 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
             FakeDB.PetTable = pets;
             return chosenPet;
         }
+
+        public Pet GetSinglePetById(int id)
+        {
+            return FakeDB.PetTable.FirstOrDefault(pet => pet.Id == id);
+        }
     }
 }

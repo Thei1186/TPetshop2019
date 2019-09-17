@@ -60,18 +60,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         public Owner ReadOwner(int id)
         {
             _validateIdService.ValidateId(id);
-
-            var ownerToGet = _ownerRepo.GetOwners().Select(o => new Owner()
-            {
-                Id = o.Id,
-                FirstName = o.FirstName,
-                LastName = o.LastName,
-                Email = o.Email,
-                PhoneNumber = o.PhoneNumber,
-                Address = o.Address
-            }
-            ).ToList().FirstOrDefault(owner => owner.Id == id);
-
+            var ownerToGet = _ownerRepo.GetOwnerById(id);
             if (ownerToGet == null)
             {
                 throw new InvalidDataException($"No owner with the id: {id} found");
