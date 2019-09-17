@@ -34,6 +34,8 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Owner DeleteOwner(Owner owner)
         {
+            var petsToRemove = _context.Pets.Where(p => p.PreviousOwner.Id == owner.Id);
+            _context.RemoveRange(petsToRemove);
             var ownerToRemove = _context.Remove(owner).Entity;
             _context.SaveChanges();
             return ownerToRemove;
