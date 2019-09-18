@@ -102,7 +102,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
             return _petRepo.GetSinglePetById(id);
         }
-        
+
+        public Pet ReadPetWithOwners(int id)
+        {
+            return _petRepo.GetSinglePetByIdWithOwners(id);
+        }
+
         // Old update method
         public Pet UpdatePet(int id, string name, string type, string colour, double price,
             DateTime birthdate, DateTime soldDate, Owner previousOwner)

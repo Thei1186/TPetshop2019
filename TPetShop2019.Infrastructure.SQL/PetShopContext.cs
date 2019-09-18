@@ -9,6 +9,13 @@ namespace TPetShop2019.Infrastructure.SQL
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pet>().HasOne(p => p.PreviousOwner)
+                .WithMany().OnDelete(DeleteBehavior.SetNull);
+        }
+
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Owner> Owner { get; set; }
     }

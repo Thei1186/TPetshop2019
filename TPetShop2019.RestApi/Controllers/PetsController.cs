@@ -44,7 +44,7 @@ namespace TPetShop2019.RestApi.Controllers
              {
                 return BadRequest("Id must be greater than 0");
              }
-             return _petService.ReadPet(id);
+             return _petService.ReadPetWithOwners(id);
             }
             catch (Exception e)
             {

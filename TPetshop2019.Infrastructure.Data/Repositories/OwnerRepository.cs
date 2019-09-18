@@ -5,7 +5,7 @@ using TPetshop2019.Core.Entity;
 
 namespace TPetshop2019.Infrastructure.Data.Repositories
 {
-    public class OwnerRepository: IOwnerRepository
+    public class OwnerRepository
     {
         public IEnumerable<Owner> GetOwners()
         {

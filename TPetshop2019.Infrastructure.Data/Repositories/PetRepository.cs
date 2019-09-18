@@ -5,7 +5,7 @@ using TPetshop2019.Core.Entity;
 
 namespace TPetshop2019.Infrastructure.Data.Repositories
 {
-    public class PetRepository: IPetRepository
+    public class PetRepository
     {
         public IEnumerable<Pet> ReadPets()
         {

@@ -38,6 +38,14 @@ namespace TPetshop2019.Core.ApplicationServices
         Pet ReadPet(int id);
 
         /// <summary>
+        /// Gets the pet with the matching Id and includes
+        /// owners
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Pet ReadPetWithOwners(int id);
+
+        /// <summary>
         /// Updates a pet with the inserted parameters
         /// </summary>
         /// <param name="id"></param>
