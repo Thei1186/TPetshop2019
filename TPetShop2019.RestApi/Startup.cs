@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using TPetshop2019.Core.ApplicationServices;
 using TPetshop2019.Core.ApplicationServices.Services;
 using TPetshop2019.Core.DomainServices;
@@ -38,6 +39,7 @@ namespace TPetShop2019.RestApi
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IValidateIdService, ValidateIdService>();
+
             if (Environment.IsDevelopment())
             {
                 services.AddDbContext<PetShopContext>(
@@ -49,6 +51,13 @@ namespace TPetShop2019.RestApi
                 services.AddDbContext<PetShopContext>(
                     opt => opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             }
+
+            services.AddMvc().AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                opt.SerializerSettings.MaxDepth = 2;
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

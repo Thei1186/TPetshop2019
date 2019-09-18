@@ -90,8 +90,8 @@ namespace TPetShop2019.Infrastructure.SQL
                 Type = "Goat"
             };
 
-            context.Pets.AddRange(p1,p2,p3,p4,p5,p6);
             context.Owner.AddRange(peter,lars);
+            context.Pets.AddRange(p1,p2,p3,p4,p5,p6);
             context.SaveChanges();
         }
     }

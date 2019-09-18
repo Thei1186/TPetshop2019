@@ -17,7 +17,7 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public IEnumerable<Owner> GetOwners()
         {
-           return _context.Owner.ToList();
+            return _context.Owner.Include(o => o.Pets).ToList();
         }
 
         public Owner CreateOwner(Owner owner)

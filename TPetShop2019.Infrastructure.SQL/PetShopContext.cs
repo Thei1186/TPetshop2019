@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TPetshop2019.Core.Entity;
 
 namespace TPetShop2019.Infrastructure.SQL
@@ -13,7 +14,7 @@ namespace TPetShop2019.Infrastructure.SQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pet>().HasOne(p => p.PreviousOwner)
-                .WithMany().OnDelete(DeleteBehavior.SetNull);
+                .WithMany(o => o.Pets).OnDelete(DeleteBehavior.SetNull);
         }
 
         public DbSet<Pet> Pets { get; set; }
