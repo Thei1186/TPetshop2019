@@ -29,7 +29,9 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Owner UpdateOwner(Owner owner)
         {
-           return _context.Update<Owner>(owner).Entity;
+            var updatedOwner = _context.Update<Owner>(owner).Entity;
+            _context.SaveChanges();
+            return updatedOwner;
         }
 
         public Owner DeleteOwner(Owner owner)
