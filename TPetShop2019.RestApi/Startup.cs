@@ -81,7 +81,7 @@ namespace TPetShop2019.RestApi
 
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
