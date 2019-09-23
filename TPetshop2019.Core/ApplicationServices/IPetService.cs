@@ -101,5 +101,12 @@ namespace TPetshop2019.Core.ApplicationServices
         /// <param name="prevOwner"></param>
         /// <returns>The changed pet</returns>
         Pet AddOwnerToPet(Pet newPet, Owner prevOwner);
+        
+       /// <summary>
+        /// Gets a filtered list of pets 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns>a filtered list based on the requested filter</returns>
+       List<Pet> GetFilteredPets(Filter filter);
     }
 }

@@ -29,6 +29,19 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return newPet;
         }
 
+        public List<Pet> GetFilteredPets(Filter filter)
+        {
+            if (filter.CurrentPage < 0 || filter.ItemsPrPage < 0)
+            {
+                throw  new InvalidDataException("CurrentPage and ItemsPage Must be zero or more");
+            }
+            if ((filter.CurrentPage - 1 * filter.ItemsPrPage) >= _petRepo.Count())
+            {
+                throw new InvalidDataException("Index out of bounds, CurrentPage is too high");
+            }
+            return _petRepo.ReadPets(filter).ToList();
+        }
+
         public List<Pet> GetPets()
         {
             return this._petRepo.ReadPets().ToList();

@@ -16,9 +16,14 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             _context = context;
         }
 
-        public IEnumerable<Pet> ReadPets()
+        public IEnumerable<Pet> ReadPets(Filter filter)
         {
-            return _context.Pets.ToList();
+            if (filter == null)
+            {
+                return _context.Pets.ToList();
+            }
+
+            return _context.Pets.Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
         }
 
         public Pet AddPet(Pet pet)
@@ -30,20 +35,10 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Pet UpdatePet(Pet pet)
         {
-            if (pet.PreviousOwner != null &&
-                _context.ChangeTracker.Entries<Owner>()
-                    .FirstOrDefault(oe => oe.Entity.Id == pet.PreviousOwner.Id) == null)
-            {
-                _context.Attach(pet.PreviousOwner);
-            }
-            else
-            {
-                _context.Entry(pet).Reference(p => p.PreviousOwner).IsModified = true;
-            }
-
-            var updated = _context.Update(pet).Entity;
+            _context.Attach(pet).State = EntityState.Modified;
+            _context.Entry(pet).Reference(p => p.PreviousOwner).IsModified = true;
             _context.SaveChanges();
-            return updated;
+            return pet;
         }
 
         public Pet RemovePet(int id)
@@ -61,6 +56,11 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
         public Pet GetSinglePetByIdWithOwners(int id)
         {
             return _context.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.Id == id);
+        }
+
+        public int Count()
+        {
+            return _context.Pets.Count();
         }
     }
 }

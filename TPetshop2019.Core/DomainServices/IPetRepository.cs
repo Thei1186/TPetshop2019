@@ -9,7 +9,7 @@ namespace TPetshop2019.Core.DomainServices
         /// Gets all pets from the database
         /// </summary>
         /// <returns>An IEnumerable list of pets</returns>
-        IEnumerable<Pet> ReadPets();
+        IEnumerable<Pet> ReadPets(Filter filter = null);
         
         /// <summary>
         /// Adds a pet object to the list in the database
@@ -45,5 +45,11 @@ namespace TPetshop2019.Core.DomainServices
         /// <param name="id"></param>
         /// <returns></returns>
         Pet GetSinglePetByIdWithOwners(int id);
+        
+        /// <summary>
+        /// Gets the number of pets
+        /// </summary>
+        /// <returns>An int representing the number of pets in the list</returns>
+        int Count();
     }
 }

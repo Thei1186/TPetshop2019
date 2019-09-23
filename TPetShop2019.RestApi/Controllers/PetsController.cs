@@ -22,11 +22,12 @@ namespace TPetShop2019.RestApi.Controllers
 
         // GET api/pets
         [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
+        public ActionResult<IEnumerable<Pet>> Get([FromQuery] Filter filter)
         {
             try
             {
-                return _petService.GetPets();
+                return Ok(_petService.GetFilteredPets(filter));
+               // return Ok(_petService.GetPets());
             }
             catch (Exception e)
             {
