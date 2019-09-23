@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TPetshop2019.Core.DomainServices;
@@ -29,7 +30,20 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Pet UpdatePet(Pet pet)
         {
-            throw new System.NotImplementedException();
+            if (pet.PreviousOwner != null &&
+                _context.ChangeTracker.Entries<Owner>()
+                    .FirstOrDefault(oe => oe.Entity.Id == pet.PreviousOwner.Id) == null)
+            {
+                _context.Attach(pet.PreviousOwner);
+            }
+            else
+            {
+                _context.Entry(pet).Reference(p => p.PreviousOwner).IsModified = true;
+            }
+
+            var updated = _context.Update(pet).Entity;
+            _context.SaveChanges();
+            return updated;
         }
 
         public Pet RemovePet(int id)

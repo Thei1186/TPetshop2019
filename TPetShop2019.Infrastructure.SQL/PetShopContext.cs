@@ -13,7 +13,8 @@ namespace TPetShop2019.Infrastructure.SQL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Pet>().HasOne(p => p.PreviousOwner)
+            modelBuilder.Entity<Pet>()
+                .HasOne(p => p.PreviousOwner)
                 .WithMany(o => o.Pets).OnDelete(DeleteBehavior.SetNull);
         }
 

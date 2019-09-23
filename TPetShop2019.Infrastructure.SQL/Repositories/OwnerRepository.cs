@@ -22,6 +22,8 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Owner CreateOwner(Owner owner)
         {
+            var changeTracker = _context.ChangeTracker.Entries<Pet>();
+            
             _context.Attach(owner).State = EntityState.Added;
             _context.SaveChanges();
             return owner;
@@ -29,6 +31,15 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Owner UpdateOwner(Owner owner)
         {
+            if (owner.Pets != null)
+            {
+                _context.Attach(owner.Pets);
+            }
+            else
+            {
+                _context.Entry(owner).Reference(o => o.Pets).IsModified = true;
+            }
+
             var updatedOwner = _context.Update<Owner>(owner).Entity;
             _context.SaveChanges();
             return updatedOwner;
