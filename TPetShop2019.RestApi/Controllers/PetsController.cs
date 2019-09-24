@@ -77,9 +77,8 @@ namespace TPetShop2019.RestApi.Controllers
         {
             try
             {
-                var petToDelete = _petService.ReadPet(id);
-                return Ok(_petService.DeletePet(petToDelete));
-                
+                return Ok(_petService.DeletePet(id > 0 ? new Pet() {Id = id} : null));
+
             }
             catch (Exception e)
             {

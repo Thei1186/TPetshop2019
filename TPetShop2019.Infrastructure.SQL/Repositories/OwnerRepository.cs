@@ -15,9 +15,15 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             _context = context;
         }
 
-        public IEnumerable<Owner> GetOwners()
+        public IEnumerable<Owner> GetOwners(Filter filter)
         {
+            if (filter.CurrentPage > 0 && filter.ItemsPrPage > 0 )
+            {
+                return _context.Owner.Include(o => o.Pets).Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
+                    .Take(filter.ItemsPrPage).ToList();
+            }
             return _context.Owner.Include(o => o.Pets).ToList();
+            
         }
 
         public Owner CreateOwner(Owner owner)
@@ -32,7 +38,8 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
         public Owner UpdateOwner(Owner owner)
         {
             _context.Attach(owner).State = EntityState.Modified;
-            _context.Entry(owner).Reference(o => o.Pets).IsModified = true;
+            _context.Entry(owner).Collection(o => o.Pets).IsModified = true;
+            //_context.Entry(owner).Reference(o => o.Pets).IsModified = true;
             _context.SaveChanges();
             
             return owner;
@@ -54,6 +61,11 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
         {
             return _context.Owner.Include(o => o.Pets)
                 .FirstOrDefault(o => o.Id == id);
+        }
+
+        public int Count()
+        {
+            return _context.Owner.Count();
         }
     }
 }

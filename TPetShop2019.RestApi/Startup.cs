@@ -55,7 +55,7 @@ namespace TPetShop2019.RestApi
             services.AddMvc().AddJsonOptions(opt =>
             {
                 opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                opt.SerializerSettings.MaxDepth = 2;
+                opt.SerializerSettings.MaxDepth = 3;
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

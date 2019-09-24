@@ -81,13 +81,11 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public Owner MakeUpdatedOwner(Owner ownerToUpdate)
         {
-            var owner = ReadOwner(ownerToUpdate.Id);
-            owner.FirstName = ownerToUpdate.FirstName;
-            owner.LastName = ownerToUpdate.LastName;
-            owner.Address = ownerToUpdate.Address;
-            owner.Email = ownerToUpdate.Email;
-            owner.PhoneNumber = ownerToUpdate.PhoneNumber;
-            return _ownerRepo.UpdateOwner(owner);
+            if (ownerToUpdate == null)
+            {
+                throw new InvalidDataException("Something went wrong with updating the owner");
+            }
+            return _ownerRepo.UpdateOwner(ownerToUpdate);
         }
         public Owner DeleteOwner(Owner owner)
         {
@@ -101,6 +99,19 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         public List<Owner> ReadAllOwners()
         {
             return _ownerRepo.GetOwners().ToList();
+        }
+
+        public List<Owner> GetFilteredOwners(Filter filter)
+        {
+            if (filter.CurrentPage < 0 || filter.ItemsPrPage < 0)
+            {
+                throw new InvalidDataException("CurrentPage and ItemsPage Must be zero or more");
+            }
+            if ((filter.CurrentPage - 1 * filter.ItemsPrPage) >= _ownerRepo.Count())
+            {
+                throw new InvalidDataException("Index out of bounds, CurrentPage is too high");
+            }
+            return _ownerRepo.GetOwners(filter).ToList();
         }
     }
 }

@@ -9,8 +9,8 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 {
     public class PetRepository: IPetRepository
     {
-        private PetShopContext _context;
 
+        private PetShopContext _context;
         public PetRepository(PetShopContext context)
         {
             _context = context;
@@ -18,12 +18,13 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public IEnumerable<Pet> ReadPets(Filter filter)
         {
-            if (filter == null)
+            if (filter.CurrentPage > 0 && filter.ItemsPrPage > 0)
             {
-                return _context.Pets.ToList();
+                return _context.Pets.Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
             }
+            return _context.Pets.ToList();
 
-            return _context.Pets.Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
+            
         }
 
         public Pet AddPet(Pet pet)

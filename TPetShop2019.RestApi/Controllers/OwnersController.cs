@@ -22,11 +22,12 @@ namespace TPetShop2019.RestApi.Controllers
 
         // GET api/owners
         [HttpGet]
-        public ActionResult<IEnumerable<Owner>> Get()
+        public ActionResult<IEnumerable<Owner>> Get([FromQuery] Filter filter)
         {
             try
             {
-                return _ownerService.ReadAllOwners();
+                return _ownerService.GetFilteredOwners(filter);
+                //return _ownerService.ReadAllOwners();
             }
             catch (Exception e)
             {
