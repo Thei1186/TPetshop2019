@@ -26,21 +26,21 @@ namespace TPetshop2019.Core.DomainServices
         Pet UpdatePet(Pet pet);
 
         /// <summary>
-        /// Removes pet from the database based on Id
+        /// Removes pet from the database based on PetId
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The removed pet</returns>
         Pet RemovePet(int id);
 
         /// <summary>
-        /// Gets a pet by Id
+        /// Gets a pet by PetId
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The pet with the given id</returns>
         Pet GetSinglePetById(int id);
 
         /// <summary>
-        /// Gets a pet by Id and includes owners
+        /// Gets a pet by PetId and includes owners
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

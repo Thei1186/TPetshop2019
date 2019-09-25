@@ -26,7 +26,20 @@ namespace TPetShop2019.RestApi.Controllers
         {
             try
             {
-                return _ownerService.GetFilteredOwners(filter);
+                var filteredList = _ownerService.GetFilteredOwners(filter);
+                var newOwnerList = new List<object>();
+                foreach (var owner in filteredList)
+                {
+                    newOwnerList.Add(new
+                    {
+                        owner.FirstName,
+                        owner.LastName,
+                        owner.Email,
+                        owner.PhoneNumber,
+                        owner.Pets
+                    });
+                }
+                return Ok(filteredList);
                 //return _ownerService.ReadAllOwners();
             }
             catch (Exception e)
@@ -86,7 +99,7 @@ namespace TPetShop2019.RestApi.Controllers
             {
                 if (id <= 0 || id != owner.Id)
                 {
-                    return BadRequest("Parameter Id and owner ID must be the same");
+                    return BadRequest("Parameter PetId and owner ID must be the same");
                 }
 
                 return Ok(_ownerService.MakeUpdatedOwner(owner));

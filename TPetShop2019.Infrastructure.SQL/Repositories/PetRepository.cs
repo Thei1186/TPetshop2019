@@ -44,19 +44,19 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Pet RemovePet(int id)
         {
-            var entityRemoved = _context.Remove(new Pet{Id = id}).Entity;
+            var entityRemoved = _context.Remove(new Pet{PetId = id}).Entity;
             _context.SaveChanges();
             return entityRemoved;
         }
 
         public Pet GetSinglePetById(int id)
         {
-            return _context.Pets.FirstOrDefault(pet => pet.Id == id);
+            return _context.Pets.FirstOrDefault(pet => pet.PetId == id);
         }
 
         public Pet GetSinglePetByIdWithOwners(int id)
         {
-            return _context.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.Id == id);
+            return _context.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.PetId == id);
         }
 
         public int Count()

@@ -14,7 +14,7 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
 
         public Pet AddPet(Pet pet)
         {
-            pet.Id = FakeDB.PetId++;
+            pet.PetId = FakeDB.PetId++;
             var pets = FakeDB.PetTable.ToList();
             pets.Add(pet);
             FakeDB.PetTable = pets;
@@ -24,7 +24,7 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
         public Pet UpdatePet(Pet pet)
         {
             var pets = FakeDB.PetTable.ToList();
-            var chosenPet = pets.FirstOrDefault(p => p.Id == pet.Id);
+            var chosenPet = pets.FirstOrDefault(p => p.PetId == pet.PetId);
             if (chosenPet != null)
             {
                 pets.Remove(chosenPet);
@@ -39,7 +39,7 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
         public Pet RemovePet(int id)
         {
             var pets = FakeDB.PetTable.ToList();
-            var chosenPet = pets.FirstOrDefault(pet => pet.Id == id);
+            var chosenPet = pets.FirstOrDefault(pet => pet.PetId == id);
             pets.Remove(chosenPet);
             FakeDB.PetTable = pets;
             return chosenPet;
@@ -47,7 +47,7 @@ namespace TPetshop2019.Infrastructure.Data.Repositories
 
         public Pet GetSinglePetById(int id)
         {
-            return FakeDB.PetTable.FirstOrDefault(pet => pet.Id == id);
+            return FakeDB.PetTable.FirstOrDefault(pet => pet.PetId == id);
         }
     }
 }

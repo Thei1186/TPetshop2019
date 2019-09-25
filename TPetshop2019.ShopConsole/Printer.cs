@@ -122,7 +122,7 @@ namespace TPetshop2019.ShopConsole
             }
             else
             {
-                Console.WriteLine("Id not valid, exiting method");
+                Console.WriteLine("PetId not valid, exiting method");
             }
         }
 
@@ -135,7 +135,7 @@ namespace TPetshop2019.ShopConsole
             }
             else
             {
-                Console.WriteLine("Id not valid, exiting method");
+                Console.WriteLine("PetId not valid, exiting method");
             }
         }
 
@@ -247,7 +247,7 @@ namespace TPetshop2019.ShopConsole
         public void PrintPetInfo(Pet pet)
         {
             Console.Write(
-                $"\nPet found: \nId: {pet.Id}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
+                $"\nPet found: \nId: {pet.PetId}\nName: {pet.Name}\nType: {pet.Type}\nBirthdate: {pet.Birthdate}\n" +
                 $"Colour: {pet.Colour}\nPreviousOwner: {getPreviousOwnerNameOrMsg(pet)}\n" +
                 $"SoldDate: {pet.SoldDate}\nPrice: {pet.Price}\n");
             Console.WriteLine("\n");
@@ -302,7 +302,7 @@ namespace TPetshop2019.ShopConsole
             var previousOwner = CreateOwner();
             
             this._petService.UpdatePet(id,name,type,colour,price,birthdate,soldDate,previousOwner);
-            Console.WriteLine($"The pet with Id: {id} has been updated\n");
+            Console.WriteLine($"The pet with PetId: {id} has been updated\n");
         }
 
         private void ReadPet()

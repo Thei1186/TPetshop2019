@@ -43,7 +43,7 @@ namespace TPetShop2019.RestApi.Controllers
             {
              if (id <= 0)
              {
-                return BadRequest("Id must be greater than 0");
+                return BadRequest("PetId must be greater than 0");
              }
              return _petService.ReadPetWithOwners(id);
             }
@@ -77,7 +77,7 @@ namespace TPetShop2019.RestApi.Controllers
         {
             try
             {
-                return Ok(_petService.DeletePet(id > 0 ? new Pet() {Id = id} : null));
+                return Ok(_petService.DeletePet(id > 0 ? new Pet() {PetId = id} : null));
 
             }
             catch (Exception e)
@@ -92,9 +92,9 @@ namespace TPetShop2019.RestApi.Controllers
         {
             try
             {
-                if (id <= 0 || id != pet.Id)
+                if (id <= 0 || id != pet.PetId)
                 {
-                    return BadRequest("Parameter Id and pet ID must be the same");
+                    return BadRequest("Parameter PetId and pet ID must be the same");
                 }
 
                 return Ok(_petService.MakeUpdatedPet(pet));

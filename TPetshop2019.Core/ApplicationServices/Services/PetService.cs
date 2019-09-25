@@ -58,7 +58,6 @@ namespace TPetshop2019.Core.ApplicationServices.Services
                 {
                     Name = name,
                     Birthdate = birthDate,
-                    Colour = colour,
                     Price = price,
                     Type = type
                 };
@@ -130,7 +129,6 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             if (p1 != null)
             {
                 p1.Birthdate = birthdate;
-                p1.Colour = colour;
                 p1.Name = name;
                 p1.PreviousOwner = previousOwner;
                 p1.Price = price;
@@ -148,10 +146,9 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             {
                 throw new InvalidDataException("The pet received through the parameter was null");
             }
-            var pet = ReadPet(petToUpdate.Id);
+            var pet = ReadPet(petToUpdate.PetId);
             pet.Name = petToUpdate.Name;
             pet.Birthdate = petToUpdate.Birthdate;
-            pet.Colour = petToUpdate.Colour;
             pet.Price = petToUpdate.Price;
             pet.Type = petToUpdate.Type;
             pet.PreviousOwner = petToUpdate.PreviousOwner;
@@ -166,7 +163,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             {
                 throw new InvalidDataException("Pet was null so nothing was deleted");
             }
-            return this._petRepo.RemovePet(pet.Id);
+            return this._petRepo.RemovePet(pet.PetId);
         }
 
         public List<Pet> sortPets()

@@ -39,7 +39,6 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
         {
             _context.Attach(owner).State = EntityState.Modified;
             _context.Entry(owner).Collection(o => o.Pets).IsModified = true;
-            //_context.Entry(owner).Reference(o => o.Pets).IsModified = true;
             _context.SaveChanges();
             
             return owner;

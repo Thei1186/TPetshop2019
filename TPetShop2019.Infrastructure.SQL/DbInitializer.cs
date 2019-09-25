@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TPetshop2019.Core.Entity;
 
 namespace TPetShop2019.Infrastructure.SQL
@@ -10,6 +12,7 @@ namespace TPetShop2019.Infrastructure.SQL
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+            #region Owner
             Owner peter = new Owner
             {
                 FirstName = "Peter",
@@ -27,13 +30,40 @@ namespace TPetShop2019.Infrastructure.SQL
                 Email = "Lars@petermail.com",
                 PhoneNumber = "75304020"
             };
+            #endregion
+
+            #region Colours
+            var black = new Colour()
+            {
+                PetColour = "black"
+            };
+
+            var brown = new Colour()
+            {
+                PetColour = "brown"
+            };
+
+            var white = new Colour()
+            {
+                PetColour = "white"
+            };
+
+            var gray = new Colour()
+            {
+                PetColour = "gray"
+            };
+
+
+            #endregion
+
+            #region pets
             Pet p1 = new Pet
             {
                 
                 Birthdate = new DateTime(2017, 2, 10),
-                Colour = "Dark Brown",
                 Name = "Peter Barker",
                 PreviousOwner = peter,
+                Colours = new List<PetColour>(),
                 Price = 350,
                 Type = "Dog"
             };
@@ -42,7 +72,6 @@ namespace TPetShop2019.Infrastructure.SQL
             {
                 
                 Birthdate = new DateTime(2014, 4, 20),
-                Colour = "Dark Red",
                 Name = "Magmadar",
                 PreviousOwner = lars,
                 Price = 750.95,
@@ -53,7 +82,6 @@ namespace TPetShop2019.Infrastructure.SQL
             Pet p3 = new Pet
             {
                 Birthdate = new DateTime(2004, 8, 5),
-                Colour = "Dark Brown",
                 Name = "Ser Slithers",
                 PreviousOwner = lars,
                 Price = 557.35,
@@ -63,7 +91,6 @@ namespace TPetShop2019.Infrastructure.SQL
             Pet p4 = new Pet
             {
                 Birthdate = new DateTime(2018, 2, 25),
-                Colour = "Pink",
                 Name = "Emergency Bacon Supply",
                 PreviousOwner = peter,
                 Price = 787,
@@ -73,7 +100,6 @@ namespace TPetShop2019.Infrastructure.SQL
             Pet p5 = new Pet
             {
                 Birthdate = new DateTime(2004, 8, 5),
-                Colour = "White",
                 Name = "MissHoots",
                 PreviousOwner = lars,
                 Price = 157.35,
@@ -83,13 +109,40 @@ namespace TPetShop2019.Infrastructure.SQL
             Pet p6 = new Pet
             {
                 Birthdate = new DateTime(2016, 1, 5),
-                Colour = "Tan",
                 Name = "McBleatsALot",
                 PreviousOwner = lars,
                 Price = 451.35,
                 Type = "Goat"
             };
 
+            #endregion
+
+            #region Pet colour
+
+            PetColour pc1 = new PetColour
+            {
+                Colour = black,
+                ColourId = black.ColourId,
+                Pet = p1,
+                PetId = p1.PetId
+            };
+
+            PetColour pc2 = new PetColour
+            {
+                Colour = brown,
+                ColourId = brown.ColourId,
+                Pet = p2,
+                PetId = p2.PetId
+            };
+            #endregion
+
+            #region Setup
+
+            context.Colours.Add(black);
+            p1.Colours.Add(pc1);
+            context.PetColour.Add(pc1);
+            black.PetList.Add(pc1);
+            #endregion
             context.Owner.AddRange(peter,lars);
             context.Pets.AddRange(p1,p2,p3,p4,p5,p6);
             context.SaveChanges();

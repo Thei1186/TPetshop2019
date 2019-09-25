@@ -31,14 +31,14 @@ namespace TPetshop2019.Core.ApplicationServices
         Pet CreatePet(Pet pet);
 
         /// <summary>
-        /// Accesses the pet with the matching Id
+        /// Accesses the pet with the matching PetId
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Returns the accessed pet</returns>
         Pet ReadPet(int id);
 
         /// <summary>
-        /// Gets the pet with the matching Id and includes
+        /// Gets the pet with the matching PetId and includes
         /// owners
         /// </summary>
         /// <param name="id"></param>
