@@ -134,18 +134,53 @@ namespace TPetShop2019.Infrastructure.SQL
                 Pet = p2,
                 PetId = p2.PetId
             };
+
+            PetColour pc3 = new PetColour()
+            {
+                Colour = gray,
+                ColourId = gray.ColourId,
+                Pet = p3,
+                PetId = p3.PetId
+            };
+
+            PetColour pc4 = new PetColour()
+            {
+                Colour = white,
+                ColourId = white.ColourId,
+                Pet = p4,
+                PetId = p4.PetId
+            };
+
+            PetColour pc5 = new PetColour()
+            {
+                Colour = gray,
+                ColourId = gray.ColourId,
+                Pet = p5,
+                PetId = p5.PetId
+            };
+
+            PetColour pc6 = new PetColour()
+            {
+                Colour = black,
+                ColourId = black.ColourId,
+                Pet = p6,
+                PetId = p6.PetId
+            };
             #endregion
 
             #region Setup
 
-            context.Colours.Add(black);
-            p1.Colours.Add(pc1);
-            context.PetColour.Add(pc1);
-            black.PetList.Add(pc1);
-            #endregion
-            context.Owner.AddRange(peter,lars);
-            context.Pets.AddRange(p1,p2,p3,p4,p5,p6);
+            //p1.Colours.Add(pc1);
+            //black.PetList.Add(pc1);
+            
+
+            context.PetColour.AddRange(pc1, pc2, pc3, pc4, pc5, pc6);
+            context.Colours.AddRange(black, brown, gray, white);
+            context.Owner.AddRange(peter, lars);
+            context.Pets.AddRange(p1, p2, p3, p4, p5, p6);
+
             context.SaveChanges();
+            #endregion
         }
     }
 }

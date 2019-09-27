@@ -58,7 +58,7 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Owner GetOwnerByIdIncludePets(int id)
         {
-            return _context.Owner.Include(o => o.Pets)
+            return _context.Owner.Include(o => o.Pets).ThenInclude(p => p.Colours)
                 .FirstOrDefault(o => o.Id == id);
         }
 
