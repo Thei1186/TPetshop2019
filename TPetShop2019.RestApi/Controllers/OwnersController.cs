@@ -27,19 +27,22 @@ namespace TPetShop2019.RestApi.Controllers
             try
             {
                 var filteredList = _ownerService.GetFilteredOwners(filter);
-                var newOwnerList = new List<object>();
-                foreach (var owner in filteredList)
-                {
-                    newOwnerList.Add(new
-                    {
-                        owner.FirstName,
-                        owner.LastName,
-                        owner.Email,
-                        owner.PhoneNumber,
-                        owner.Pets
-                    });
-                }
                 return Ok(filteredList);
+
+                //var newOwnerList = new List<object>();
+                //foreach (var owner in filteredList)
+                //{
+                //    newOwnerList.Add(new
+                //    {
+                //        owner.Id,
+                //        owner.FirstName,
+                //        owner.LastName,
+                //        owner.Email,
+                //        owner.PhoneNumber,
+                //        owner.Pets
+                //    });
+                //}
+
                 //return _ownerService.ReadAllOwners();
             }
             catch (Exception e)

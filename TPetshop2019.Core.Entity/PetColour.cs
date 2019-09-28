@@ -2,7 +2,6 @@
 {
     public class PetColour
     {
-        public int Id { get; set; }
         public int ColourId { get; set; }
         public int PetId { get; set; }
         public Pet Pet { get; set; }

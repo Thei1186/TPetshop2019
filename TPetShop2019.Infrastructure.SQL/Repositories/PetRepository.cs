@@ -20,9 +20,13 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
         {
             if (filter.CurrentPage > 0 && filter.ItemsPrPage > 0)
             {
-                return _context.Pets.Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
+                return _context.Pets
+                    .Include(p => p.Colours)
+                    .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
             }
-            return _context.Pets.ToList();
+            return _context.Pets
+                .Include(p => p.Colours)
+                .ToList();
 
             
         }
@@ -56,7 +60,10 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public Pet GetSinglePetByIdWithOwners(int id)
         {
-            return _context.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.PetId == id);
+            return _context.Pets
+                .Include(p => p.Colours)
+                .Include(p => p.PreviousOwner)
+                .FirstOrDefault(p => p.PetId == id);
         }
 
         public int Count()

@@ -172,7 +172,7 @@ namespace TPetShop2019.Infrastructure.SQL
 
             //p1.Colours.Add(pc1);
             //black.PetList.Add(pc1);
-            
+
 
             context.PetColour.AddRange(pc1, pc2, pc3, pc4, pc5, pc6);
             context.Colours.AddRange(black, brown, gray, white);

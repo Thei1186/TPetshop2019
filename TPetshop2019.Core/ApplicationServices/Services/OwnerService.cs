@@ -23,6 +23,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             this._petRepo = petRepo;
         }
 
+        //old method
         public Owner NewOwner(string firstName, string lastName, string address, string phoneNr, string email)
         {
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -46,6 +47,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return _ownerRepo.GetOwnerByIdIncludePets(id);
         }
 
+        //new method for restApi
         public Owner CreateOwner(Owner owner)
         {
             if (owner == null)
@@ -67,6 +69,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return ownerToGet;
         }
 
+        //old method
         public Owner UpdateOwner(int id, string firstName, string lastName, string address, string phoneNr, string email)
         {
             Owner ownerToUpdate = ReadOwner(id);
@@ -79,6 +82,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return ownerToUpdate;
         }
 
+        //new method for restApi
         public Owner MakeUpdatedOwner(Owner ownerToUpdate)
         {
             if (ownerToUpdate == null)
@@ -87,6 +91,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             }
             return _ownerRepo.UpdateOwner(ownerToUpdate);
         }
+
         public Owner DeleteOwner(Owner owner)
         {
             if (owner == null)

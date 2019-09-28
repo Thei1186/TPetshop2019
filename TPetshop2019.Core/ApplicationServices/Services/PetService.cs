@@ -146,15 +146,8 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             {
                 throw new InvalidDataException("The pet received through the parameter was null");
             }
-            var pet = ReadPet(petToUpdate.PetId);
-            pet.Name = petToUpdate.Name;
-            pet.Birthdate = petToUpdate.Birthdate;
-            pet.Price = petToUpdate.Price;
-            pet.Type = petToUpdate.Type;
-            pet.PreviousOwner = petToUpdate.PreviousOwner;
-            pet.SoldDate = petToUpdate.SoldDate;
-            
-            return pet;
+
+            return _petRepo.UpdatePet(petToUpdate);
         }
 
         public Pet DeletePet(Pet pet)
