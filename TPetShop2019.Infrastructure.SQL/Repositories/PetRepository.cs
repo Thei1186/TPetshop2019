@@ -62,6 +62,7 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
         {
             return _context.Pets
                 .Include(p => p.Colours)
+                .ThenInclude(c => c.Colour)
                 .Include(p => p.PreviousOwner)
                 .FirstOrDefault(p => p.PetId == id);
         }

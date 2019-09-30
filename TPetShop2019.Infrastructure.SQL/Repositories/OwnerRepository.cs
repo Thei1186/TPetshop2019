@@ -22,7 +22,9 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
                 return _context.Owner.Include(o => o.Pets).ThenInclude(p => p.Colours).Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
                     .Take(filter.ItemsPrPage).ToList();
             }
-            return _context.Owner.Include(o => o.Pets).ThenInclude(p => p.Colours).ToList();
+            return _context.Owner.Include(o => o.Pets)
+                .ThenInclude(p => p.Colours)
+                .ToList();
             
         }
 
@@ -61,6 +63,7 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             return _context.Owner
                 .Include(o => o.Pets)
                 .ThenInclude(p => p.Colours)
+                .ThenInclude(c => c.Colour)
                 .FirstOrDefault(o => o.Id == id);
         }
 

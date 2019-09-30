@@ -9,7 +9,7 @@ namespace TPetShop2019.Infrastructure.SQL
     {
         public static void SeedDb(PetShopContext context)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             #region Owner

@@ -39,9 +39,10 @@ namespace TPetShop2019.RestApi.Controllers
                 //        owner.LastName,
                 //        owner.Email,
                 //        owner.PhoneNumber,
-                //        owner.Pets
                 //    });
                 //}
+
+                //return Ok(newOwnerList);
 
                 //return _ownerService.ReadAllOwners();
             }
