@@ -65,7 +65,8 @@ namespace TPetShop2019.Infrastructure.SQL
                 PreviousOwner = peter,
                 Colours = new List<PetColour>(),
                 Price = 350,
-                Type = "Dog"
+                Type = "Dog",
+                SoldDate = new DateTime(2018, 8, 27)
             };
 
             Pet p2 = new Pet
@@ -86,6 +87,7 @@ namespace TPetShop2019.Infrastructure.SQL
                 PreviousOwner = lars,
                 Price = 557.35,
                 Type = "Snake",
+                SoldDate = new DateTime(2006, 8, 27)
             };
 
             Pet p4 = new Pet
@@ -95,6 +97,7 @@ namespace TPetShop2019.Infrastructure.SQL
                 PreviousOwner = peter,
                 Price = 787,
                 Type = "Pig",
+                SoldDate = new DateTime(2019, 1, 27)
             };
 
             Pet p5 = new Pet
@@ -103,7 +106,8 @@ namespace TPetShop2019.Infrastructure.SQL
                 Name = "MissHoots",
                 PreviousOwner = lars,
                 Price = 157.35,
-                Type = "Owl"
+                Type = "Owl",
+                SoldDate = new DateTime(2005, 8, 21)
             };
 
             Pet p6 = new Pet
@@ -112,7 +116,8 @@ namespace TPetShop2019.Infrastructure.SQL
                 Name = "McBleatsALot",
                 PreviousOwner = lars,
                 Price = 451.35,
-                Type = "Goat"
+                Type = "Goat",
+                SoldDate = new DateTime(2018, 8, 27)
             };
 
             #endregion
