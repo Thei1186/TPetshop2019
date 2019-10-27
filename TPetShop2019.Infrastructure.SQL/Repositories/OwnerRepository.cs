@@ -17,7 +17,7 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
 
         public IEnumerable<Owner> GetOwners(Filter filter)
         {
-            if (filter.CurrentPage > 0 && filter.ItemsPrPage > 0 )
+            if (filter != null && filter.CurrentPage > 0 && filter.ItemsPrPage > 0 )
             {
                 return _context.Owner.Include(o => o.Pets).ThenInclude(p => p.Colours).Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
                     .Take(filter.ItemsPrPage).ToList();

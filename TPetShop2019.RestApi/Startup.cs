@@ -12,6 +12,7 @@ using TPetshop2019.Core.ApplicationServices;
 using TPetshop2019.Core.ApplicationServices.Services;
 using TPetshop2019.Core.DomainServices;
 using TPetShop2019.Infrastructure.SQL;
+using TPetShop2019.Infrastructure.SQL.Helper;
 using TPetShop2019.Infrastructure.SQL.Repositories;
 
 namespace TPetShop2019.RestApi

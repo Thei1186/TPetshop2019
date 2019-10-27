@@ -9,7 +9,7 @@ namespace TPetShop2019.Infrastructure.SQL
     {
         public static void SeedDb(PetShopContext context)
         {
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             #region Owner
@@ -19,7 +19,10 @@ namespace TPetShop2019.Infrastructure.SQL
                 LastName = "Petersen",
                 Address = "Petersengade 10",
                 Email = "Peter@petermail.com",
-                PhoneNumber = "75202020"
+                PhoneNumber = "75202020",
+                Username = "p1",
+                Password = "password",
+                IsAdmin = true
             };
 
             Owner lars = new Owner
@@ -28,7 +31,10 @@ namespace TPetShop2019.Infrastructure.SQL
                 LastName = "Larsen",
                 Address = "Larsgade 10",
                 Email = "Lars@petermail.com",
-                PhoneNumber = "75304020"
+                PhoneNumber = "75304020",
+                Username = "p2",
+                Password = "password",
+                IsAdmin = false
             };
             #endregion
 

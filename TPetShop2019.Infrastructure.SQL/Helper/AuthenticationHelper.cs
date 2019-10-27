@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using TPetshop2019.Core.DomainServices;
 using TPetshop2019.Core.Entity;
 
-namespace TPetShop2019.Infrastructure.SQL.Repositories
+namespace TPetShop2019.Infrastructure.SQL.Helper
 {
     public class AuthenticationHelper: IAuthenticationHelper
     {
