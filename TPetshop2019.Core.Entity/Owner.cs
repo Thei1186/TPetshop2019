@@ -12,6 +12,8 @@ namespace TPetshop2019.Core.Entity
         public string Email { get; set; }
 
         public List<Pet> Pets { get; set; }
-
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
