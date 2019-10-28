@@ -1,18 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using TPetshop2019.Core.DomainServices;
 using TPetshop2019.Core.Entity;
 
 namespace TPetShop2019.Infrastructure.SQL
 {
-    public class DbInitializer
+    public class DbInitializer: IDbInitializer
     {
-        public static void SeedDb(PetShopContext context)
+        private IAuthenticationHelper _authHelper;
+        public DbInitializer(IAuthenticationHelper authHelper)
+        {
+            _authHelper = authHelper;
+        }
+
+        public void SeedDb(PetShopContext context)
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+
+
             #region Owner
+
+            string password = "1337Passwrd#";
+            byte[] passwordHash1, passwordHash2, passwordSalt1, passwordSalt2; // arrays for salts and hashes
+            _authHelper.CreatePasswordHash(password,out passwordHash1,out passwordSalt1);
+            _authHelper.CreatePasswordHash(password,out passwordHash2, out passwordSalt2);
+
             Owner peter = new Owner
             {
                 FirstName = "Peter",
@@ -21,7 +37,8 @@ namespace TPetShop2019.Infrastructure.SQL
                 Email = "Peter@petermail.com",
                 PhoneNumber = "75202020",
                 Username = "p1",
-                Password = "password",
+                PasswordHash = passwordHash1,
+                PasswordSalt = passwordSalt1,
                 IsAdmin = true
             };
 
@@ -33,10 +50,12 @@ namespace TPetShop2019.Infrastructure.SQL
                 Email = "Lars@petermail.com",
                 PhoneNumber = "75304020",
                 Username = "p2",
-                Password = "password",
+                PasswordHash = passwordHash2,
+                PasswordSalt = passwordSalt2,
                 IsAdmin = false
             };
             #endregion
+            
 
             #region Colours
             var black = new Colour()
@@ -193,5 +212,6 @@ namespace TPetShop2019.Infrastructure.SQL
             context.SaveChanges();
             #endregion
         }
+
     }
 }
