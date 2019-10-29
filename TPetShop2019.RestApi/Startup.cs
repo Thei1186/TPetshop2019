@@ -98,6 +98,7 @@ namespace TPetShop2019.RestApi
                {
                    var context = scope.ServiceProvider.GetRequiredService<PetShopContext>();
                    var dbInitializer = scope.ServiceProvider.GetService<IDbInitializer>();
+                   context.Database.EnsureDeleted();
                    dbInitializer.SeedDb(context);
                }
                app.UseDeveloperExceptionPage();

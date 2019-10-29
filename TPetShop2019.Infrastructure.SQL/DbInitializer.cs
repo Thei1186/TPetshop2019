@@ -17,7 +17,6 @@ namespace TPetShop2019.Infrastructure.SQL
 
         public void SeedDb(PetShopContext context)
         {
-            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
 
