@@ -68,7 +68,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         //New method for RestApi
         public Pet CreatePet(Pet pet)
         {
-            if (pet == null || pet.PreviousOwner.Id <= 0)
+            if (pet == null)
             {
                 throw new InvalidDataException("Something went wrong when trying to create a pet. Please check the input");
             }
