@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TPetshop2019.Core.ApplicationServices;
@@ -22,6 +23,7 @@ namespace TPetShop2019.RestApi.Controllers
 
         // GET api/pets
         [HttpGet]
+        [Authorize]
         public ActionResult<IEnumerable<Pet>> Get([FromQuery] Filter filter)
         {
             try
@@ -37,6 +39,7 @@ namespace TPetShop2019.RestApi.Controllers
 
         // GET api/pets/1
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<Pet> Get(int id)
         {
             try
@@ -55,6 +58,7 @@ namespace TPetShop2019.RestApi.Controllers
 
         // POST api/pets
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public ActionResult<Pet> Post([FromBody] Pet pet)
         {
             try
@@ -73,6 +77,7 @@ namespace TPetShop2019.RestApi.Controllers
 
         // DELETE api/pets
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult<Pet> Delete(int id)
         {
             try
@@ -88,6 +93,7 @@ namespace TPetShop2019.RestApi.Controllers
 
         // PUT api/pets
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult<Pet> Update(int id, [FromBody] Pet pet)
         {
             try

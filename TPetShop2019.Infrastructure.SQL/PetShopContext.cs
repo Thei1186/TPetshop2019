@@ -29,5 +29,6 @@ namespace TPetShop2019.Infrastructure.SQL
         public DbSet<Owner> Owner { get; set; }
         public DbSet<PetColour> PetColour { get; set; }
         public DbSet<Colour> Colours { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace TPetshop2019.Core.DomainServices
     {
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
         bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt);
-        string GenerateToken(Owner owner);
+        string GenerateToken(User user);
     }
 }

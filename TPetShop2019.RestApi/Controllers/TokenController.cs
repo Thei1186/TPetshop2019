@@ -9,10 +9,10 @@ namespace TPetShop2019.RestApi.Controllers
     [ApiController]
     public class TokenController : Controller
     {
-        private IOwnerRepository _repo;
+        private IUserRepository _repo;
         private IAuthenticationHelper _authService;
 
-        public TokenController(IOwnerRepository repo, IAuthenticationHelper authService)
+        public TokenController(IUserRepository repo, IAuthenticationHelper authService)
         {
             _repo = repo;
             _authService = authService;
@@ -21,7 +21,7 @@ namespace TPetShop2019.RestApi.Controllers
         [HttpPost]
         public IActionResult Login([FromBody]LoginInputModel model)
         {
-            var user = _repo.GetOwners().FirstOrDefault(u => u.Username == model.Username);
+            var user = _repo.GetAll().FirstOrDefault(u => u.Username == model.Username);
 
             // check if username exists
             if (user == null)

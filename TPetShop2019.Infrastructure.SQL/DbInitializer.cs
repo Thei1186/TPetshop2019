@@ -24,9 +24,11 @@ namespace TPetShop2019.Infrastructure.SQL
             #region Owner
 
             string password = "1337Passwrd#";
-            byte[] passwordHash1, passwordHash2, passwordSalt1, passwordSalt2; // arrays for salts and hashes
+            string passwordAnn = "N0tAnn#passW0rd";
+            byte[] passwordHash1, passwordHash2, passwordSalt1, passwordSalt2, annHash, annSalt; // arrays for salts and hashes
             _authHelper.CreatePasswordHash(password,out passwordHash1,out passwordSalt1);
             _authHelper.CreatePasswordHash(password,out passwordHash2, out passwordSalt2);
+            _authHelper.CreatePasswordHash(passwordAnn, out annHash, out annSalt);
 
             Owner peter = new Owner
             {
@@ -38,7 +40,7 @@ namespace TPetShop2019.Infrastructure.SQL
                 Username = "p1",
                 PasswordHash = passwordHash1,
                 PasswordSalt = passwordSalt1,
-                IsAdmin = true
+                IsAdmin = false
             };
 
             Owner lars = new Owner
@@ -54,7 +56,18 @@ namespace TPetShop2019.Infrastructure.SQL
                 IsAdmin = false
             };
             #endregion
+
+            #region Users
+            User adminAnn = new User
+            {
+                IsAdmin = true,
+                PasswordHash = annHash,
+                PasswordSalt = annSalt,
+                Username = "adminAnn"
+            };
             
+
+            #endregion
 
             #region Colours
             var black = new Colour()
@@ -207,7 +220,7 @@ namespace TPetShop2019.Infrastructure.SQL
             context.Colours.AddRange(black, brown, gray, white);
             context.Owner.AddRange(peter, lars);
             context.Pets.AddRange(p1, p2, p3, p4, p5, p6);
-
+            context.Users.AddRange(adminAnn);
             context.SaveChanges();
             #endregion
         }

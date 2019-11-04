@@ -60,14 +60,14 @@ namespace TPetShop2019.Infrastructure.SQL.Helper
         }
 
         // This method generates and returns a JWT token for a user.
-        public string GenerateToken(Owner owner)
+        public string GenerateToken(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, owner.Username)
+                new Claim(ClaimTypes.Name, user.Username)
             };
 
-            if (owner.IsAdmin)
+            if (user.IsAdmin)
                 claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
 
             var token = new JwtSecurityToken(
