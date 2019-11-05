@@ -29,7 +29,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return newPet;
         }
 
-        public List<Pet> GetFilteredPets(Filter filter)
+        public FilteredList<Pet> GetFilteredPets(Filter filter)
         {
             if (filter.CurrentPage < 0 || filter.ItemsPrPage < 0)
             {
@@ -39,12 +39,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             {
                 throw new InvalidDataException("Index out of bounds, CurrentPage is too high");
             }
-            return _petRepo.ReadPets(filter).ToList();
+            return _petRepo.ReadPets(filter);
         }
 
-        public List<Pet> GetPets()
+        public FilteredList<Pet> GetPets()
         {
-            return this._petRepo.ReadPets().ToList();
+            return this._petRepo.ReadPets();
         }
 
         //Old method for console
@@ -77,7 +77,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public List<Pet> GetFiveCheapestPets()
         {
-            var listToSort = GetPets().OrderBy(pets => pets.Price).ToList();
+            var listToSort = GetPets().List.OrderBy(pets => pets.Price).ToList();
             if (listToSort.Count > 5)
             {
                 var sortedList = new List<Pet>();
@@ -95,7 +95,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
         public List<Pet> SearchPets(string query)
         {
             var petMatchList = new List<Pet>();
-            foreach (var pet in GetPets())
+            foreach (var pet in GetPets().List)
             {
                 if (pet.Type.ToLower().Contains(query.ToLower()))
                 {
@@ -161,7 +161,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
 
         public List<Pet> sortPets()
         {
-            var listToSort = GetPets().OrderBy(pets => pets.Price).ToList();
+            var listToSort = GetPets().List.OrderBy(pets => pets.Price).ToList();
             return listToSort;
         }
     }

@@ -15,17 +15,20 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             _context = context;
         }
 
-        public IEnumerable<Owner> GetOwners(Filter filter)
+        public FilteredList<Owner> GetOwners(Filter filter)
         {
+            var filteredList = new FilteredList<Owner>();
             if (filter != null && filter.CurrentPage > 0 && filter.ItemsPrPage > 0 )
             {
-                return _context.Owner.Include(o => o.Pets).ThenInclude(p => p.Colours).Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
+                 filteredList.List = _context.Owner.Include(o => o.Pets).ThenInclude(p => p.Colours).Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
                     .Take(filter.ItemsPrPage).ToList();
+                 filteredList.Count = _context.Owner.Count();
+                 return filteredList;
             }
-            return _context.Owner.Include(o => o.Pets)
+            filteredList.List = _context.Owner.Include(o => o.Pets)
                 .ThenInclude(p => p.Colours)
                 .ToList();
-            
+            return filteredList;
         }
 
         public Owner CreateOwner(Owner owner)

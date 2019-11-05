@@ -24,29 +24,12 @@ namespace TPetShop2019.RestApi.Controllers
         // GET api/owners
         [Authorize]
         [HttpGet]
-        public ActionResult<IEnumerable<Owner>> Get([FromQuery] Filter filter)
+        public ActionResult<FilteredList<Owner>> Get([FromQuery] Filter filter)
         {
             try
             {
                 var filteredList = _ownerService.GetFilteredOwners(filter);
                 return Ok(filteredList);
-
-                //var newOwnerList = new List<object>();
-                //foreach (var owner in filteredList)
-                //{
-                //    newOwnerList.Add(new
-                //    {
-                //        owner.Id,
-                //        owner.FirstName,
-                //        owner.LastName,
-                //        owner.Email,
-                //        owner.PhoneNumber,
-                //    });
-                //}
-
-                //return Ok(newOwnerList);
-
-                //return _ownerService.ReadAllOwners();
             }
             catch (Exception e)
             {
@@ -85,7 +68,7 @@ namespace TPetShop2019.RestApi.Controllers
         }
 
         // DELETE api/owners
-     //   [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<Owner> Delete(int id)
         {

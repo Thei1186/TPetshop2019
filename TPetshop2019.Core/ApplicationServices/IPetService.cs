@@ -10,7 +10,7 @@ namespace TPetshop2019.Core.ApplicationServices
         /// Gets the list of current pets
         /// </summary>
         /// <returns> an IEnumerable list of pets</returns>
-        List<Pet> GetPets();
+        FilteredList<Pet> GetPets();
 
         /// <summary>
         /// Creates a pet based on the specified parameters
@@ -107,6 +107,6 @@ namespace TPetshop2019.Core.ApplicationServices
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>a filtered list based on the requested filter</returns>
-       List<Pet> GetFilteredPets(Filter filter);
+       FilteredList<Pet> GetFilteredPets(Filter filter);
     }
 }

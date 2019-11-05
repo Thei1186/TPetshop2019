@@ -101,12 +101,12 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             return _ownerRepo.DeleteOwner(owner);
         }
 
-        public List<Owner> ReadAllOwners()
+        public FilteredList<Owner> ReadAllOwners()
         {
-            return _ownerRepo.GetOwners().ToList();
+            return _ownerRepo.GetOwners();
         }
 
-        public List<Owner> GetFilteredOwners(Filter filter)
+        public FilteredList<Owner> GetFilteredOwners(Filter filter)
         {
             if (filter.CurrentPage < 0 || filter.ItemsPrPage < 0)
             {
@@ -116,7 +116,7 @@ namespace TPetshop2019.Core.ApplicationServices.Services
             {
                 throw new InvalidDataException("Index out of bounds, CurrentPage is too high");
             }
-            return _ownerRepo.GetOwners(filter).ToList();
+            return _ownerRepo.GetOwners(filter);
         }
     }
 }

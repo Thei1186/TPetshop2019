@@ -59,14 +59,14 @@ namespace TPetshop2019.Core.ApplicationServices
         /// Gets all the current owners from the database
         /// </summary>
         /// <returns>A list of owners</returns>
-        List<Owner> ReadAllOwners();
+        FilteredList<Owner> ReadAllOwners();
 
         /// <summary>
         /// Returns a filtered list of owners
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        List<Owner> GetFilteredOwners(Filter filter);
+        FilteredList<Owner> GetFilteredOwners(Filter filter);
 
         /// <summary>
         /// Updates an owner. This method is used in the RestAPI
