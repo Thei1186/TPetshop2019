@@ -9,7 +9,7 @@ namespace TPetshop2019.Core.DomainServices
         /// Gets all pets from the database
         /// </summary>
         /// <returns>An IEnumerable list of pets</returns>
-        IEnumerable<Pet> ReadPets(Filter filter = null);
+        FilteredList<Pet> ReadPets(Filter filter = null);
         
         /// <summary>
         /// Adds a pet object to the list in the database

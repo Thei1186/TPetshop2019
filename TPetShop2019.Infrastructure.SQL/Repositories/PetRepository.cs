@@ -16,19 +16,27 @@ namespace TPetShop2019.Infrastructure.SQL.Repositories
             _context = context;
         }
 
-        public IEnumerable<Pet> ReadPets(Filter filter)
+        public FilteredList<Pet> ReadPets(Filter filter)
         {
+            var filteredList = new FilteredList<Pet>();
+
             if (filter.CurrentPage > 0 && filter.ItemsPrPage > 0)
             {
-                return _context.Pets
+                filteredList.List = _context.Pets
                     .Include(p => p.Colours)
                     .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage).Take(filter.ItemsPrPage);
+
+                filteredList.Count = _context.Pets.Count();
+                return filteredList;
             }
-            return _context.Pets
+
+            filteredList.List = _context.Pets
                 .Include(p => p.Colours)
                 .ToList();
+            filteredList.Count = _context.Pets.Count();
+            return filteredList;
 
-            
+
         }
 
         public Pet AddPet(Pet pet)
