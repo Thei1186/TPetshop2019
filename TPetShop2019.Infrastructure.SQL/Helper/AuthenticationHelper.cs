@@ -78,7 +78,7 @@ namespace TPetShop2019.Infrastructure.SQL.Helper
                     null, // audience - not needed (ValidateAudience = false)
                     claims.ToArray(),
                     DateTime.Now,               // notBefore
-                    DateTime.Now.AddMinutes(10)));  // expires
+                    DateTime.Now.AddMinutes(2)));  // expires
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
